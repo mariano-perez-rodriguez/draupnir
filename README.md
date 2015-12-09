@@ -1,2 +1,2 @@
-# draupnir
-The Draupnir RNG
+# Draupnir
+The Draupnir RNG.
