@@ -28,7 +28,7 @@ of James Bond and Riddick would be, it kinda stuck.
 ## How Draupnir Works
 
 - [The Sponge Construction](#the-sponge-construction)
-- [Draupnir's State Change unction](#draupnirs-state-change-function)
+- [Draupnir's State Change Function](#draupnirs-state-change-function)
 - [Draupnir's Output Function](#draupnirs-output-function)
 
 Draupnir is based off of the concept of a _Cryptographic Sponge_ (see: [The Sponge Functions Corner](http://sponge.noekeon.org/)): a construction
@@ -253,3 +253,5 @@ For a detailed discussion of this last point, see the entry on "strength" on [Ri
 
 Draupnir is free software, distributed under the [GNU Affero General Public License, version 3](https://www.gnu.org/licenses/agpl-3.0.html),
 or (at your option) any later version.
+
+See the file [LICENSE.md](./LICENSE.md) for the full text.
