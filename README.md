@@ -34,22 +34,24 @@ of James Bond and Riddick would be, it kinda stuck.
 Draupnir is based off of the concept of a _Cryptographic Sponge_ (see: [The Sponge Functions Corner](http://sponge.noekeon.org/)): a construction
 that allows for a _reseedable_ and _splittable_ RNG to be built.
 
+One of Draupnir's most central objectives is to be easy to understand and allow for a clean implementation.
+
 ### The Sponge Construction
 
 A detailed analysis of the sponge construction is provided in the link above, but, just in case you're lazy, here's a quick summary.
 
 A cryptographic sponge consists of three elements:
 
-- A _state_ : a state is just that, a structure of a given size in bits (call it _t_ ), which is divided in two "parts": the _rate_ (call it _r_ ), and the _capacity_ (call it _c_ ). This division is, a priori, only notational, the state is taken to be a contiguous string of _t_ bits.
+- A _state_ : a state is just that, a structure of a given size in bits (call it _t_ ), which is divided in two "parts": the _rate_ (call it _r_ ), and the _capacity_ (call it _c_ ).
 - A _state change function_ : a state change function is just a function (call it _f_ ) that, given a state _s_, produces a new state _s' = f(s)_.
-- An _output function_ : an output function is a function (call it _g_ ) that, given the "rate" portion of the state _u_, produces the sponge's output _x = g(u)_ ; in "standard" sponges, the output function is usually the identity function.
+- An _output function_ : an output function is a function (call it _g_ ) that, given the "rate" portion of the state _r_, produces the sponge's output _x = g(r)_ ; in "standard" sponges, the output function is usually the identity function.
 
 Now one can perform two operations on one such sponge:
 
 - __Soaking:__ to soak the sponge in a datum _d_ means to replace the "rate" portion of the state with (a suitable padding of) _d_, and apply the state change function to the resulting state.
 - __Squeezing:__ to squeeze the sponge means to extract the "rate" portion of the state applying the output function to it, and apply the state change function to the current state.
 
-By having two identical copies of a sponge, and soaking each on a different piece of data, one gets two sponges whose squeeze outputs differ from that point on (this is the property we call "split").
+As an example of the generality of this construction (see the link above for many, _many_, more) note that by having two identical copies of a sponge, and soaking each on a different piece of data, one gets two sponges whose squeeze outputs differ from that point on (this is the property we call "split").
 
 ### Draupnir's State Change Function
 
@@ -88,16 +90,20 @@ In its current implementation (and on my laptop), Draupnir can output roughly 1M
 
 ### Is Draupnir Recommended for Password Hashing?
 
-__A thousand times _NO_.__ Password hashing is a delicate matter, and there are a lot of things to take into account. Draupnir, even with its
+__A thousand times _NO_.__
+
+Password hashing is a delicate matter, and there are a lot of things to take into account. Draupnir, even with its
 relatively slow throughput, is far too fast to provide an adequate time barrier for attacks, furthermore, Draupnir's throughput can be
 dramatically increased in an ASIC implementation.
 
 You should use one of the hashes tailored for that role: `pbkdf2`, `bcrypt` or `scrypt` (for a detailed analysis of the password hashing problem
 see: [Salted Password Hashing - Doing it Right](https://crackstation.net/hashing-security.htm) by Defuse.ca).
 
+__tl;dr: NO.__
+
 ### Can I Use Draupnir in my Commercial Project?
 
-A priori, yes, but see the full text of the AGPLv3 (GNU Affero General Public License, version 3) for applicable conditions.
+_A priori_, yes, but see the full text of the AGPLv3 (GNU Affero General Public License, version 3) for applicable conditions.
 
 ## Contributing
 
@@ -107,7 +113,7 @@ There are a number of ways you can contribute to Draupnir's development:
 - Report bugs (in the GitHub issue system, I'm sure there are a lot of these lurking in the shadows).
 - Fix bugs (by submitting a pull request).
 - Port Draupnir to another platform (although not officially supported now, if portability is not too much of a hassle, it can be provided).
-- Attack it! Attacking RNGs is the only sure way we can be certain of their concrete strengths (and weaknesses).
+- _Attack it!_ Attacking RNGs is the only sure way we can be certain of their concrete strengths (and weaknesses). Even breaking Draupnir would allow us to further our understanding of the techniques involved.
 
 For a detailed discussion of this last point, see the entry on "strength" on [Ritter's Crypto Glossary _and_  Dictionary of Technical Cryptography](http://www.ciphersbyritter.com/GLOSSARY.HTM#Strength).
 
