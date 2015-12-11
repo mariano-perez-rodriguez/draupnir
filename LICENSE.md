@@ -118,6 +118,7 @@ You may convey a covered work in object code form under the terms of [sections 4
 A separable portion of the object code, whose source code is excluded from the Corresponding Source as a System Library, need not be included in conveying the object code work.
 
 A "User Product" is either
+
 1. a "consumer product", which means any tangible personal property which is normally used for personal, family, or household purposes, or
 2. anything designed or sold for incorporation into a dwelling. In determining whether a product is a consumer product, doubtful cases shall be resolved in favor of coverage. For a particular product received by a particular user, "normally used" refers to a typical or common use of that class of product, regardless of the status of the particular user or of the way in which the particular user actually uses, or expects or is expected to use, the product. A product is a consumer product regardless of whether the product has substantial commercial, industrial or non-consumer uses, unless such uses represent the only significant mode of use of the product.
 
@@ -155,6 +156,7 @@ Additional terms, permissive or non-permissive, may be stated in the form of a s
 You may not propagate or modify a covered work except as expressly provided under this License. Any attempt otherwise to propagate or modify it is void, and will automatically terminate your rights under this License (including any patent licenses granted under the third paragraph of [section 11](#11-patents)).
 
 However, if you cease all violation of this License, then your license from a particular copyright holder is reinstated
+
 1. provisionally, unless and until the copyright holder explicitly and finally terminates your license, and
 2. permanently, if the copyright holder fails to notify you of the violation by some reasonable means prior to 60 days after the cessation.
 
@@ -186,6 +188,7 @@ Each contributor grants you a non-exclusive, worldwide, royalty-free patent lice
 In the following three paragraphs, a "patent license" is any express agreement or commitment, however denominated, not to enforce a patent (such as an express permission to practice a patent or covenant not to sue for patent infringement). To "grant" such a patent license to a party means to make such an agreement or commitment not to enforce a patent against the party.
 
 If you convey a covered work, knowingly relying on a patent license, and the Corresponding Source of the work is not available for anyone to copy, free of charge and under the terms of this License, through a publicly available network server or other readily accessible means, then you must either
+
 1. cause the Corresponding Source to be so available, or
 2. arrange to deprive yourself of the benefit of the patent license for this particular work, or
 3. arrange, in a manner consistent with the requirements of this License, to extend the patent license to downstream recipients.
