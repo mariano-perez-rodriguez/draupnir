@@ -29,7 +29,7 @@ The precise terms and conditions for copying, distribution and modification foll
 
 ## TERMS AND CONDITIONS
 
-### 0. Definitions
+### Definitions
 
 "This License" refers to version 3 of the GNU Affero General Public License.
 
