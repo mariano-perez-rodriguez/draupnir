@@ -57,7 +57,7 @@ As an example of the generality of this construction (see the link above for man
 
 ### Draupnir's Output Function
 
-## Dieharder Results
+## [Dieharder](http://www.phy.duke.edu/~rgb/General/dieharder.php) Results
 
 Draupnir has been tested with `dieharder 3.31.1`, using the following line:
 
