@@ -33,7 +33,7 @@ to build the `draupnir` binary. If everything went well, you will see a new bina
 ./draupnir
 ````
 
-and you're done! See the manual for more information.
+and you're done! See the [usage](#usage) section for more information.
 
 ## What's in a Name?
 
