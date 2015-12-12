@@ -148,7 +148,85 @@ CFLAGS += -m64
 CFLAGS += -fwrapv
 CFLAGS += -freg-struct-return
 CFLAGS += -fshort-enums
+CFLAGS += -fno-guess-branch-probability
 
+
+# Optimization flags
+OPTFLAGS  =
+OPTFLAGS += -O3
+OPTFLAGS += -fmerge-all-constants
+OPTFLAGS += -fmodulo-sched
+OPTFLAGS += -fmodulo-sched-allow-regmoves
+OPTFLAGS += -fgcse-sm
+OPTFLAGS += -fgcse-las
+OPTFLAGS += -fgcse-after-reload
+OPTFLAGS += -funsafe-loop-optimizations
+OPTFLAGS += -fdeclone-ctor-dtor
+OPTFLAGS += -fdevirtualize-speculatively
+# OPTFLAGS += -fdevirtualize-at-ltrans
+OPTFLAGS += -flive-range-shrinkage
+OPTFLAGS += -fsched-pressure
+OPTFLAGS += -fsched-spec-load
+OPTFLAGS += -fsched-spec-load-dangerous
+OPTFLAGS += -fsched2-use-superblocks
+OPTFLAGS += -freschedule-modulo-scheduled-loops
+OPTFLAGS += -fselective-scheduling
+OPTFLAGS += -fselective-scheduling2
+OPTFLAGS += -fsel-sched-pipelining
+OPTFLAGS += -fsel-sched-pipelining-outer-loops
+# OPTFLAGS += -fno-semantic-interposition
+OPTFLAGS += -fipa-pta
+OPTFLAGS += -fisolate-erroneous-paths-attribute
+OPTFLAGS += -ftree-loop-linear
+OPTFLAGS += -floop-interchange
+OPTFLAGS += -floop-strip-mine
+OPTFLAGS += -floop-block
+# OPTFLAGS += -floop-unroll-and-jam
+OPTFLAGS += -fgraphite-identity
+OPTFLAGS += -floop-nest-optimize
+OPTFLAGS += -floop-parallelize-all
+OPTFLAGS += -ftree-loop-if-convert-stores
+OPTFLAGS += -ftree-loop-distribution
+OPTFLAGS += -ftree-loop-im
+OPTFLAGS += -ftree-loop-ivcanon
+OPTFLAGS += -fivopts
+OPTFLAGS += -ftree-vectorize
+OPTFLAGS += -fvect-cost-model=cheap
+OPTFLAGS += -fsimd-cost-model=cheap
+OPTFLAGS += -fvariable-expansion-in-unroller
+OPTFLAGS += -flto
+# OPTFLAGS += -flto-odr-type-merging
+OPTFLAGS += -ffat-lto-objects
+OPTFLAGS += -ffast-math
+OPTFLAGS += -fassociative-math
+OPTFLAGS += -fno-signed-zeros
+OPTFLAGS += -fno-trapping-math
+OPTFLAGS += -fcx-fortran-rules
+OPTFLAGS += -ftracer
+OPTFLAGS += -funroll-loops
+OPTFLAGS += -fpeel-loops
+OPTFLAGS += -funswitch-loops
+OPTFLAGS += -fbranch-target-load-optimize
+# OPTFLAGS += -fbranch-target-load-optimize2
+OPTFLAGS += -fbtr-bb-exclusive
+# OPTFLAGS += -fstdarg-opt
+
+# Debug flags
+DEBUGFLAGS  =
+DEBUGFLAGS += -g3
+DEBUGFLAGS += -feliminate-unused-debug-symbols
+DEBUGFLAGS += -fdebug-types-section
+DEBUGFLAGS += -fsanitize=address
+DEBUGFLAGS += -fsanitize=leak
+DEBUGFLAGS += -fsanitize=undefined
+# DEBUGFLAGS += -fsanitize=float-divide-by-zero
+# DEBUGFLAGS += -fsanitize=float-cast-overflow
+# DEBUGFLAGS += -fcheck-pointer-bounds
+# DEBUGFLAGS += -fchecking
+DEBUGFLAGS += -fvar-tracking
+#DEBUGFLAGS += -fvar-tracking-assignments
+
+### -frandom-seed=number # for deterministic builds?
 
 
 # Use g++ as the default linker
@@ -159,11 +237,11 @@ LDFLAGS =
 
 
 draupnir: main.o
-	${LD} ${LDFLAGS} -o "draupnir"  "main.o" "Crc64.o"
+	${LD} ${LDFLAGS} ${OPTFLAGS} -o "draupnir"  "main.o" "Crc64.o"
 
 
 main.o: main.cpp
-	${CC} ${CFLAGS} -c -o "main.o"  "main.cpp"
+	${CC} ${CFLAGS} ${OPTFLAGS} -c -o "main.o"  "main.cpp"
 
 
 .PHONY: clean
