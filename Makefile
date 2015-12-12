@@ -1,6 +1,13 @@
 
+# Instance-dependent constants (to enable deterministic builds)
+PWD  := '/proc/self/cwd'
+DATE := $(shell LC_ALL=C TZ=UTC date '+%b %e %Y')
+TIME := $(shell LC_ALL=C TZ=UTC date '+%H:%M:%S')
+TS   := $(shell LC_ALL=C TZ=UTC date '+%a %b %e %H:%M:%S %Y')
+
+
 # Use g++ as the default compiler
-CC = g++
+CC = PWD=${PWD} LC_ALL=C TZ=UTC g++
 
 # Reset CFLAGS
 CFLAGS =
@@ -74,6 +81,7 @@ CFLAGS += -Wsign-promo
 CFLAGS += -Wcomments
 CFLAGS += -Wundef
 CFLAGS += -Wunused-macros
+CFLAGS += -Wno-builtin-macro-redefined  # needed to produce deterministic builds
 
 # Machine options
 CFLAGS += -march=native
@@ -149,6 +157,10 @@ CFLAGS += -fwrapv
 CFLAGS += -freg-struct-return
 CFLAGS += -fshort-enums
 CFLAGS += -fno-guess-branch-probability
+CFLAGS += -frandom-seed=$(shell echo $< | sha512sum | sed 's/\(.*\) .*/\1/')
+CFLAGS += -D__DATE__='${DATE}'
+CFLAGS += -D__TIME__='${TIME}'
+CFLAGS += -D__TIMESTAMP__='${TS}'
 
 
 # Optimization flags
@@ -224,20 +236,20 @@ DEBUGFLAGS += -fsanitize=undefined
 # DEBUGFLAGS += -fcheck-pointer-bounds
 # DEBUGFLAGS += -fchecking
 DEBUGFLAGS += -fvar-tracking
-#DEBUGFLAGS += -fvar-tracking-assignments
-
-### -frandom-seed=number # for deterministic builds?
+#DEBUGFLAGS += -fvar-tracking-assignments  # too slooooooooow
 
 
-# Use g++ as the default linker
-LD = g++
+# Strip program to use
+STRIP = PWD=${PWD} LC_ALL=C TZ=UTC strip
 
-# Reset LDFLAGS
-LDFLAGS =
+# Stripping flags
+STRIPFLAGS  =
+STRIPFLAGS += -s
 
 
 draupnir: main.o
-	${LD} ${LDFLAGS} ${OPTFLAGS} -o "draupnir"  "main.o" "Crc64.o"
+	${CC} ${CFLAGS} ${OPTFLAGS} -o "draupnir"  "main.o"
+	${STRIP} ${STRIPFLAGS} "draupnir"
 
 
 main.o: main.cpp
