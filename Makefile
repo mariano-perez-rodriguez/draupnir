@@ -240,17 +240,19 @@ STRIP_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${STRIP} ${STRIP_FLAGS}
 ################################################################################
 ################################################################################
 
-draupnir: main.o
-	${CC_INV} -o "draupnir"  "main.o"
+draupnir: obj/main.o
+	${CC_INV} -o "draupnir"  "obj/main.o"
 	${STRIP_INV} "draupnir"
 
 
-main.o: main.cpp
-	${CC_INV} -c -o "main.o"  "main.cpp"
+obj/main.o: src/main.cpp
+	-mkdir -p obj
+	${CC_INV} -c -o "obj/main.o"  "src/main.cpp"
 
 
 ################################################################################
 
 .PHONY: clean
 clean:
-	-@rm -f *.o draupnir
+	-rm -rf obj
+	-rm -f draupnir
