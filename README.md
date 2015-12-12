@@ -48,6 +48,15 @@ of James Bond and Riddick would be, it kinda stuck.
 
 ## Usage
 
+- [Command Line](#command-line)
+- [Library](#library)
+
+Draupnir can be used either as a standalone command line program, or as a library component in your own programs (either in source form or as a pre-compiled object).
+
+### Command Line
+
+### Library
+
 ## How Draupnir Works
 
 - [The Sponge Construction](#the-sponge-construction)
