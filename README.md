@@ -12,6 +12,29 @@ The Draupnir RNG.
 
 ## Quick Start
 
+In order to clone the repository, just do:
+
+````
+git clone https://github.com/mariano-perez-rodriguez/draupnir.git
+````
+
+this will create a directory called `draupnir` under the current one, containing the repository.
+
+From there, just do:
+
+````
+cd draupnir
+make
+````
+
+to build the `draupnir` binary. If everything went well, you will see a new binary file named `draupnir`, just use it thus:
+
+````
+./draupnir
+````
+
+and you're done! See the manual for more information.
+
 ## What's in a Name?
 
 _Draupnir_ is a mythologcal artifact mentioned in the Norse mythos. To quote [Wikipedia](https://en.wikipedia.org/wiki/Draupnir):
