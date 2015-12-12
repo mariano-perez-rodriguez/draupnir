@@ -14,7 +14,7 @@ The Draupnir RNG.
 
 In order to clone the repository, just do:
 
-````
+````sh
 git clone https://github.com/mariano-perez-rodriguez/draupnir.git
 ````
 
@@ -22,14 +22,14 @@ this will create a directory called `draupnir` under the current one, containing
 
 From there, just do:
 
-````
+````sh
 cd draupnir
 make
 ````
 
 to build the `draupnir` binary. If everything went well, you will see a new binary file named `draupnir`, just use it thus:
 
-````
+````sh
 ./draupnir
 ````
 
@@ -84,7 +84,7 @@ As an example of the generality of this construction (see the link above for man
 
 Draupnir has been tested with `dieharder 3.31.1`, using the following line:
 
-````
+````sh
 dieharder -a -k 2 -Y 1 -g 201 -f draupnir.samples.bin
 ````
 
