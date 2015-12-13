@@ -4,5 +4,3 @@ obj
 bin
 # ignore auto-generated dependencies directory
 dep
-# ignore witness file
-draupnir
