@@ -1,15 +1,49 @@
+# Clear implicit rules and variables
+include extras/ClearImplicit.mk
 
 ################################################################################
-# This constants provide support for deterministic builds
+# File and directory definitions
+################################################################################
+
+# Source directory to use
+SRCDIR = src
+# Dependencies directory to use
+DEPDIR = dep
+# Object directory to use
+OBJDIR = obj
+# Binaries directory to use
+BINDIR = bin
+
+# List of source files
+SOURCES = $(shell  find ${SRCDIR}/ -type f -name "*.cpp")
+# List of dependencies files
+DEPENDENCIES = $(patsubst  ${SRCDIR}/%.cpp,${DEPDIR}/%.dep,${SOURCES})
+# List of object files
+OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
+
+# set up vpath
+vpath
+vpath %.h   ${SRCDIR}
+vpath $.hpp ${SRCDIR}
+vpath %.cpp ${SRCDIR}
+vpath %.dep ${DEPDIR}
+vpath %.o   ${OBJDIR}
+
+
+################################################################################
+# These constants provide support for deterministic builds
 ################################################################################
 
 # fix the pwd
 PWD  := '/proc/self/cwd'
-# the timestamp is taken here once
-TS   := $(shell LC_ALL=C TZ=UTC date -u '+%a %b %e %H:%M:%S %Y')
-# the date and time are extracted from the timestamp
-DATE := $(shell LC_ALL=C TZ=UTC date -u --date='${TS}' '+%b %e %Y')
-TIME := $(shell LC_ALL=C TZ=UTC date -u --date='${TS}' '+%H:%M:%S')
+
+# find the canonical epoch
+EPOCH := $(shell  find ${SRCDIR}/ -type f -name "*.cpp" -printf '%T@\n' | sort -rn | head -n1)
+
+# the timestamp, date, and time are set here
+TS   := $(shell LC_ALL=C TZ=UTC date -u --date='@${EPOCH}' '+%a %b %e %H:%M:%S %Y')
+DATE := $(shell LC_ALL=C TZ=UTC date -u --date='@${EPOCH}' '+%b %e %Y')
+TIME := $(shell LC_ALL=C TZ=UTC date -u --date='@${EPOCH}' '+%H:%M:%S')
 
 
 ################################################################################
@@ -257,31 +291,6 @@ POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
 ################################################################################
 ################################################################################
 
-################################################################################
-# Dile and directory definitions
-################################################################################
-
-# Source directory to use
-SRCDIR = src
-# Dependencies directory to use
-DEPDIR = dep
-# Object directory to use
-OBJDIR = obj
-# Binaries directory to use
-BINDIR = bin
-
-# List of source files
-SOURCES = $(shell  find ${SRCDIR}/ -name "*.cpp")
-# List of dependencies files
-DEPENDENCIES = $(patsubst  ${SRCDIR}/%.cpp,${DEPDIR}/%.dep,${SOURCES})
-# List of object files
-OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
-
-
-################################################################################
-################################################################################
-################################################################################
-
 # target to build the main executable
 ${BINDIR}/draupnir: ${OBJECTS} | ${BINDIR}
 	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $^
@@ -294,7 +303,7 @@ ${OBJDIR}/%.o: ${SRCDIR}/%.cpp | ${OBJDIR} ${DEPDIR}
 
 
 # target to establish dependence
-${OBJDIR}/%.o: ${DEPDIR}/%.dep ;
+${OBJDIR}/%.o: ${DEPDIR}/%.dep
 
 
 # target to create the dependencies directory
@@ -311,7 +320,7 @@ ${BINDIR}:
 
 
 # Dependencies regeneration target
-${DEPDIR}/%.dep: ;
+${DEPDIR}/%.dep:
 
 # inlude auto generated dependencies
 -include ${DEPENDENCIES}
