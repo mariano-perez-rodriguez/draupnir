@@ -284,13 +284,17 @@ OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
 
 # target to build the main executable
 ${BINDIR}/draupnir: ${OBJECTS} | ${BINDIR}
-	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $?
+	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $^
 	${STRIP_INV} "${BINDIR}/draupnir"
 
 # target to build all the objects and their dependencies
-${OBJDIR}/%.o: ${SRCDIR}/%.cpp ${DEPDIR}/%.dep | ${OBJDIR} ${DEPDIR}
+${OBJDIR}/%.o: ${SRCDIR}/%.cpp | ${OBJDIR} ${DEPDIR}
 	${CC_COMPILE_INV} ${CC_DEP_FLAGS} -c -o "$@"  "$<"
 	${POSTCOMPILE}
+
+
+# target to establish dependence
+${OBJDIR}/%.o: ${DEPDIR}/%.dep ;
 
 
 # target to create the dependencies directory
