@@ -20,7 +20,7 @@ TIME := $(shell LC_ALL=C TZ=UTC date -u --date='${TS}' '+%H:%M:%S')
 CC = g++
 
 # Strip program to use
-STRIP = PWD=${PWD} LC_ALL=C TZ=UTC strip
+STRIP = strip
 
 
 ################################################################################
