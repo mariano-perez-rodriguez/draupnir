@@ -214,6 +214,15 @@ CC_DBG_FLAGS += -fvar-tracking
 # CC_DBG_FLAGS += -fcheck-pointer-bounds
 # CC_DBG_FLAGS += -fchecking
 
+# Dependency generation flags
+#
+# These flags control automatic dependency generation
+#
+CC_DEP_FLAGS  =
+CC_DEP_FLAGS += -MT $@ -MP
+CC_DEP_FLAGS += -MMD
+CC_DEP_FLAGS += -MF ${DEPDIR}/$*.dep.tmp
+
 
 ################################################################################
 # Flags for STRIP's operation
@@ -231,28 +240,66 @@ STRIP_FLAGS += -s
 # Program invocations
 ################################################################################
 
-CC_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${CC} ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_MACH_FLAGS} ${CC_OPT_FLAGS} ${CC_DETB_FLAGS}
+# g++ compiling invocation
+CC_COMPILE_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${CC} ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_MACH_FLAGS} ${CC_OPT_FLAGS} ${CC_DETB_FLAGS}
 
+# g++ linking invocatin
+CC_LINK_INV = ${CC_COMPILE_INV}
+
+# strip stripping invocation
 STRIP_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${STRIP} ${STRIP_FLAGS}
 
+# post-compile step (in order to move temporal dependencies if no compiler errors)
+POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
 
 ################################################################################
 ################################################################################
 ################################################################################
 
-draupnir: obj/main.o
-	-mkdir -p bin
-	${CC_INV} -o "bin/draupnir"  "obj/main.o"
-	${STRIP_INV} "bin/draupnir"
+################################################################################
+# Dile and directory definitions
+################################################################################
+
+# Source directory to use
+SRCDIR = src
+# Dependencies directory to use
+DEPDIR = dep
+# Object directory to use
+OBJDIR = obj
+# Binaries directory to use
+BINDIR = bin
+
+# List of source files
+SOURCES = $(shell  find ${SRCDIR}/ -name "*.cpp")
+# List of dependencies files
+DEPENDENCIES = $(patsubst  ${SRCDIR}/%.cpp,${DEPDIR}/%.dep,${SOURCES})
+# List of object files
+OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
 
 
-obj/main.o: src/main.cpp
-	-mkdir -p obj
-	${CC_INV} -c -o "obj/main.o"  "src/main.cpp"
+################################################################################
+################################################################################
+################################################################################
 
+${BINDIR}/draupnir: ${OBJECTS}
+	-mkdir -p ${BINDIR}
+	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $?
+	${STRIP_INV} "${BINDIR}/draupnir"
+
+
+${OBJDIR}/%.o: ${SRCDIR}/%.cpp ${DEPDIR}/%.dep
+	-mkdir -p ${OBJDIR} ${DEPDIR}
+	${CC_COMPILE_INV} ${CC_DEP_FLAGS} -c -o "$@"  "$<"
+	${POSTCOMPILE}
+
+# Dependencies regeneration target
+${DEPDIR}/%.dep: ;
+
+# inlude auto generated dependencies
+-include ${DEPENDENCIES}
 
 ################################################################################
 
 .PHONY: clean
 clean:
-	-rm -rf obj bin
+	-rm -rf ${OBJDIR} ${BINDIR} ${DEPDIR}
