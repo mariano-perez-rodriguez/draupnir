@@ -252,6 +252,7 @@ STRIP_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${STRIP} ${STRIP_FLAGS}
 # post-compile step (in order to move temporal dependencies if no compiler errors)
 POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
 
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -281,22 +282,26 @@ OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
 ################################################################################
 ################################################################################
 
+# target to build the main executable
 ${BINDIR}/draupnir: ${OBJECTS} | ${BINDIR}
 	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $?
 	${STRIP_INV} "${BINDIR}/draupnir"
 
-
+# target to build all the objects and their dependencies
 ${OBJDIR}/%.o: ${SRCDIR}/%.cpp ${DEPDIR}/%.dep | ${OBJDIR} ${DEPDIR}
 	${CC_COMPILE_INV} ${CC_DEP_FLAGS} -c -o "$@"  "$<"
 	${POSTCOMPILE}
 
 
+# target to create the dependencies directory
 ${DEPDIR}:
 	-mkdir -p ${DEPDIR}
 
+# target to create the objects directory
 ${OBJDIR}:
 	-mkdir -p ${OBJDIR}
 
+# target to create the binaries directory
 ${BINDIR}:
 	-mkdir -p ${BINDIR}
 
