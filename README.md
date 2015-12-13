@@ -27,7 +27,7 @@ cd draupnir
 make
 ````
 
-to build the `draupnir` binary. If everything went well, you will see new `bin` and `obj` directories. To run draupnir, use:
+to build the `draupnir` binary. If everything went well, you will see a new `bin` directory. To run draupnir, use:
 
 ````sh
 bin/draupnir
