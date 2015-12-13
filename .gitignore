@@ -1,8 +1,8 @@
-# ignore object file directory
+# ignore object files directory
 obj
-# ignore binary file directory
+# ignore binary files directory
 bin
-# ignore suto-generated dependencies directory
+# ignore auto-generated dependencies directory
 dep
 # ignore witness file
 draupnir
