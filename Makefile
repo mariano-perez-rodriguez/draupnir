@@ -24,7 +24,7 @@ OBJECTS = $(patsubst  ${SRCDIR}/%.cpp,${OBJDIR}/%.o,${SOURCES})
 # set up vpath
 vpath
 vpath %.h   ${SRCDIR}
-vpath $.hpp ${SRCDIR}
+vpath %.hpp ${SRCDIR}
 vpath %.cpp ${SRCDIR}
 vpath %.dep ${DEPDIR}
 vpath %.o   ${OBJDIR}
