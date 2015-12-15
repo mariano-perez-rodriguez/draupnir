@@ -27,10 +27,10 @@ cd draupnir
 make
 ````
 
-to build the `draupnir` binary. If everything went well, you will see a new `bin` directory. To run draupnir, use:
+to build the `draupnir` binary; you can use `make mode=debug` for a debug build. If everything went well, you will see a new `release/bin` directory. To run draupnir, use:
 
 ````sh
-bin/draupnir
+release/bin/draupnir
 ````
 
 and you're done! See the [usage](#usage) section for more information.
