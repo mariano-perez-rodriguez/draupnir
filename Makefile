@@ -1,18 +1,62 @@
 # Clear implicit rules and variables
 include extras/ClearImplicit.mk
 
+# Source directory
+SRCDIR = src
+
+# Release directory prefix to use
+PREFIX_RELEASE := release
+# Debug directory prefix to use
+PREFIX_DEBUG   := debug
+# No-opt directory prefix to use
+PREFIX_NOOPT   := noopt
+
+# Dependencies directory suffix to use
+SUFFIX_DEP := dep
+# Object directory suffix to use
+SUFFIX_OBJ := obj
+# Binaries directory suffix to use
+SUFFIX_BIN := bin
+
+
+# Set default mode
+mode ?= release
+
+# Set paths and flags depending on mode
+ifeq      (${mode},release)
+
+  DEPDIR = ${PREFIX_RELEASE}/${SUFFIX_DEP}
+  OBJDIR = ${PREFIX_RELEASE}/${SUFFIX_OBJ}
+  BINDIR = ${PREFIX_RELEASE}/${SUFFIX_BIN}
+
+  CC_FLAGS = ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_MACH_FLAGS} ${CC_OPT_FLAGS} ${CC_DETB_FLAGS}
+
+else ifeq (${mode},debug)
+
+  DEPDIR = ${PREFIX_DEBUG}/${SUFFIX_DEP}
+  OBJDIR = ${PREFIX_DEBUG}/${SUFFIX_OBJ}
+  BINDIR = ${PREFIX_DEBUG}/${SUFFIX_BIN}
+
+  CC_FLAGS = ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_DBG_FLAGS} ${CC_DETB_FLAGS}
+
+else ifeq (${mode},noopt)
+
+  DEPDIR = ${PREFIX_NOOPT}/${SUFFIX_DEP}
+  OBJDIR = ${PREFIX_NOOPT}/${SUFFIX_OBJ}
+  BINDIR = ${PREFIX_NOOPT}/${SUFFIX_BIN}
+
+  CC_FLAGS = ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_MACH_FLAGS} -O0 ${CC_DETB_FLAGS}
+
+else
+
+  $(error Unknown mode specified! Mode must be one of `release', `debug', or `noopt')
+
+endif
+
+
 ################################################################################
 # File and directory definitions
 ################################################################################
-
-# Source directory to use
-SRCDIR = src
-# Dependencies directory to use
-DEPDIR = dep
-# Object directory to use
-OBJDIR = obj
-# Binaries directory to use
-BINDIR = bin
 
 # List of source files
 SOURCES = $(shell  find ${SRCDIR}/ -type f -name "*.cpp")
@@ -155,7 +199,7 @@ CC_MACH_FLAGS += -mprefetchwt1
 CC_MACH_FLAGS += -mlzcnt
 CC_MACH_FLAGS += -mfxsr
 CC_MACH_FLAGS += -mxsave -mxsaveopt
-CC_MACH_FLAGS += -mrtm -mtbm
+CC_MACH_FLAGS += -mrtm
 CC_MACH_FLAGS += -mvzeroupper
 CC_MACH_FLAGS += -mcx16
 CC_MACH_FLAGS += -msahf
@@ -234,6 +278,7 @@ CC_OPT_FLAGS += -fbranch-target-load-optimize -fbtr-bb-exclusive
 # These flags control the debugging information output
 #
 CC_DBG_FLAGS  =
+CC_DBG_FLAGS += -O0
 CC_DBG_FLAGS += -g3
 CC_DBG_FLAGS += -feliminate-unused-debug-symbols
 CC_DBG_FLAGS += -fdebug-types-section
@@ -267,7 +312,7 @@ CC_DEP_FLAGS += -MF ${DEPDIR}/$*.dep.tmp
 # These flags control which symbols to strip
 #
 STRIP_FLAGS  =
-STRIP_FLAGS += -s
+STRIP_FLAGS += -s -x -X
 
 
 ################################################################################
@@ -275,13 +320,17 @@ STRIP_FLAGS += -s
 ################################################################################
 
 # g++ compiling invocation
-CC_COMPILE_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${CC} ${CC_LANG_FLAGS} ${CC_VERB_FLAGS} ${CC_WARN_FLAGS} ${CC_MACH_FLAGS} ${CC_OPT_FLAGS} ${CC_DETB_FLAGS}
+CC_COMPILE_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${CC} ${CC_FLAGS}
 
 # g++ linking invocatin
 CC_LINK_INV = ${CC_COMPILE_INV}
 
-# strip stripping invocation
-STRIP_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${STRIP} ${STRIP_FLAGS}
+# strip stripping invocation (will be the no-op ":" if not on release)
+ifeq (${mode},release)
+  STRIP_INV = PWD=${PWD} LC_ALL=C TZ=UTC ${STRIP} ${STRIP_FLAGS}
+else
+  STRIP_INV = :
+endif
 
 # post-compile step (in order to move temporal dependencies if no compiler errors)
 POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
@@ -327,6 +376,9 @@ ${DEPDIR}/%.dep:
 
 ################################################################################
 
-.PHONY: clean
+.PHONY: clean cleanall
 clean:
 	-rm -rf ${OBJDIR} ${BINDIR} ${DEPDIR}
+
+cleanall:
+	-rm -rf ${PREFIX_RELEASE} ${PREFIX_NOOPT} ${PREFIX_DEBUG}
