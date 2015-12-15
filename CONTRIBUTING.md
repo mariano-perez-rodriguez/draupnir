@@ -21,7 +21,7 @@ All `C++` files should be placed in the `src` directory, possibly within subdire
 
 All files having a `.cpp` extension ___will be compiled into object files and linked with the main executable.___ Although exceptions can be accommodated for, they will be virtually nonexistent until we see a truly compelling reason behind them (the `Makefile` is a treacherous beast).
 
-No directory names `doc`, `tex`, `man`, `bin`, `obj`, `dep`, or `extras` are allowed to be clobbered. The build system uses `bin`, `obj` and `dep` for binaries, objects and dependency description files respectively; the `extras` directory contains loosely unrelated files; the `doc` directory contains documentation resources; and the `man` and `tex` directories are reserved for future use.
+No directory names `doc`, `tex`, `man`, `release`, `debug`, `noopt`, or `extras` are allowed to be clobbered. The build system uses `release`, `debug` and `noopt` for release, debug and non-optimized builds respectively; the `extras` directory contains loosely unrelated files; the `doc` directory contains documentation resources; and the `man` and `tex` directories are reserved for future use.
 
 ## Coding Conventions
 
