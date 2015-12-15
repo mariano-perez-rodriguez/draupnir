@@ -130,7 +130,7 @@ CC_LANG_FLAGS += -freg-struct-return
 CC_VERB_FLAGS  =
 # CC_VERB_FLAGS += -v
 CC_VERB_FLAGS += -fmessage-length=0
-CC_VERB_FLAGS += -fdiagnostics-color=auto
+CC_VERB_FLAGS += -fdiagnostics-color=always
 CC_VERB_FLAGS += -ftabstop=2
 
 
@@ -157,7 +157,7 @@ CC_WARN_FLAGS += -Waggregate-return
 CC_WARN_FLAGS += -Wmissing-declarations -Wredundant-decls
 CC_WARN_FLAGS += -Wnormalized=nfkc
 CC_WARN_FLAGS += -Wpacked -Wpadded
-CC_WARN_FLAGS += -Winline
+# CC_WARN_FLAGS += -Winline  # just annoying
 CC_WARN_FLAGS += -Wvector-operation-performance
 CC_WARN_FLAGS += -Wvla
 CC_WARN_FLAGS += -Wdisabled-optimization
@@ -184,30 +184,30 @@ CC_MACH_FLAGS += -mfpmath=sse -mpc80 -malign-double
 CC_MACH_FLAGS += -mmmx
 CC_MACH_FLAGS += -msse -msse2 -msse3 -mssse3 -msse4 -msse4a -msse4.1 -msse4.2
 CC_MACH_FLAGS += -mavx -mavx2 -mavx512f -mavx512pf -mavx512er -mavx512cd
-CC_MACH_FLAGS += -m3dnow
-CC_MACH_FLAGS += -mabm -mbmi -mbmi2
-CC_MACH_FLAGS += -mf16c -mfma -mfma4
-CC_MACH_FLAGS += -maes
+#CC_MACH_FLAGS += -m3dnow
+#CC_MACH_FLAGS += -mabm -mbmi -mbmi2
+#CC_MACH_FLAGS += -mf16c -mfma -mfma4
+#CC_MACH_FLAGS += -maes
 CC_MACH_FLAGS += -mpclmul
-CC_MACH_FLAGS += -mfsgsbase
-CC_MACH_FLAGS += -mrdrnd
-CC_MACH_FLAGS += -mxop
-CC_MACH_FLAGS += -mlwp
+#CC_MACH_FLAGS += -mfsgsbase
+#CC_MACH_FLAGS += -mrdrnd
+#CC_MACH_FLAGS += -mxop
+#CC_MACH_FLAGS += -mlwp
 CC_MACH_FLAGS += -msha
 CC_MACH_FLAGS += -mpopcnt
 CC_MACH_FLAGS += -mprefetchwt1
 CC_MACH_FLAGS += -mlzcnt
 CC_MACH_FLAGS += -mfxsr
 CC_MACH_FLAGS += -mxsave -mxsaveopt
-CC_MACH_FLAGS += -mrtm
-CC_MACH_FLAGS += -mvzeroupper
-CC_MACH_FLAGS += -mcx16
-CC_MACH_FLAGS += -msahf
-CC_MACH_FLAGS += -mmovbe
-CC_MACH_FLAGS += -mcrc32
-CC_MACH_FLAGS += -mtls-dialect=gnu2
+#CC_MACH_FLAGS += -mrtm
+#CC_MACH_FLAGS += -mvzeroupper
+#CC_MACH_FLAGS += -mcx16
+#CC_MACH_FLAGS += -msahf
+#CC_MACH_FLAGS += -mmovbe
+#CC_MACH_FLAGS += -mcrc32
+#CC_MACH_FLAGS += -mtls-dialect=gnu2
 CC_MACH_FLAGS += -maccumulate-outgoing-args -momit-leaf-frame-pointer
-CC_MACH_FLAGS += -mavx256-split-unaligned-load -mavx256-split-unaligned-store
+#CC_MACH_FLAGS += -mavx256-split-unaligned-load -mavx256-split-unaligned-store
 #
 # not currently supported:
 #
@@ -342,13 +342,13 @@ POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
 
 # target to build the main executable
 ${BINDIR}/draupnir: ${OBJECTS} | ${BINDIR}
-	${CC_LINK_INV} -o "${BINDIR}/draupnir"  $^
-	${STRIP_INV} "${BINDIR}/draupnir"
+	@${CC_LINK_INV} -o "${BINDIR}/draupnir"  $^
+	@${STRIP_INV} "${BINDIR}/draupnir"
 
 # target to build all the objects and their dependencies
 ${OBJDIR}/%.o: ${SRCDIR}/%.cpp | ${OBJDIR} ${DEPDIR}
-	${CC_COMPILE_INV} ${CC_DEP_FLAGS} -c -o "$@"  "$<"
-	${POSTCOMPILE}
+	@${CC_COMPILE_INV} ${CC_DEP_FLAGS} -c -o "$@"  "$<"
+	@${POSTCOMPILE}
 
 
 # target to establish dependence
@@ -357,15 +357,15 @@ ${OBJDIR}/%.o: ${DEPDIR}/%.dep
 
 # target to create the dependencies directory
 ${DEPDIR}:
-	-mkdir -p ${DEPDIR}
+	-@mkdir -p ${DEPDIR}
 
 # target to create the objects directory
 ${OBJDIR}:
-	-mkdir -p ${OBJDIR}
+	-@mkdir -p ${OBJDIR}
 
 # target to create the binaries directory
 ${BINDIR}:
-	-mkdir -p ${BINDIR}
+	-@mkdir -p ${BINDIR}
 
 
 # Dependencies regeneration target
@@ -378,7 +378,7 @@ ${DEPDIR}/%.dep:
 
 .PHONY: clean cleanall
 clean:
-	-rm -rf ${OBJDIR} ${BINDIR} ${DEPDIR}
+	-@rm -rf ${OBJDIR} ${BINDIR} ${DEPDIR}
 
 cleanall:
-	-rm -rf ${PREFIX_RELEASE} ${PREFIX_NOOPT} ${PREFIX_DEBUG}
+	-@rm -rf ${PREFIX_RELEASE} ${PREFIX_NOOPT} ${PREFIX_DEBUG}
