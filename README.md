@@ -229,6 +229,7 @@ Where only the last result of an ambiguity resolution run is shown and the faili
 - [Is Draupnir Cryptographically Secure?](#is-draupnir-cryptographically-secure)
 - [How Fast is Draupnir?](#how-fast-is-draupnir)
 - [Is Draupnir Recommended for Password Hashing?](#is-draupnir-recommended-for-password-hashing)
+- [Are there any Test Vectors Available?](#are-there-any-test-vectors-available)
 - [Can I Use Draupnir in my Commercial Project?](#can-i-use-draupnir-in-my-commercial-project)
 
 Here we present some frequently asked questions about Draupnir.
@@ -264,6 +265,46 @@ You should use one of the hashes tailored for that role: `pbkdf2`, `bcrypt` or `
 see: [Salted Password Hashing - Doing it Right](https://crackstation.net/hashing-security.htm) by Defuse.ca).
 
 __tl;dr: NO.__
+
+### Are there any Test Vectors Available?
+
+Here are the first 1024 bytes generated using the default configuration:
+
+````
+6f60f4f0 a8909e47 edfe5bac 31d1057d 21bf17a1 70154574 dba6fba7 aa7a75d6
+09bd6301 33b534cb b9c1038d 57f5f72d 7e08ef5a 9b147a51 402df398 1ad3f669
+67a098f6 56d37e6f 936dec6b 59111010 ce2d74a3 18b10ff4 2b380072 00c04cf1
+2c353bb7 84fc798c eaf7662a ff20f383 67b6a1eb 5f4eb59e ba1b5f2e 1ad09b1c
+b2636438 dd6e9616 fa866131 68005b9a 69d9eea2 b2655f6b 2234cc0f e77dcb37
+a1a2c1c1 1dd59835 b2ce42c2 947665f0 bfef306a 9aa77759 ba1e57d3 27a10281
+f8d24598 e6b61354 93faffa0 ff82d09c 86abee74 a22e3850 4f44db41 52300256
+1d97a271 e6f21292 129dc83f ecf465c0 e9ebaab7 2a090f49 4a535139 fa0fa739
+00ee1551 6756ef89 16e95962 5ba94ebc e50e3fb9 3a335199 022d8a9d 3fb50fbc
+2ff954b0 0f588015 8c98acb7 c58db2f7 8727e42f 260025ad 43843075 8282c9dc
+609a3052 8e71c42a 37c62aba 95e15792 d26079e4 dfaf41ae 1b02b608 e06c3529
+cec44b7a d0f866bb 2a2aa4ef 3dea9d06 b68e6f3b 1b0d05bf 533daa7c dec2e98f
+b831c530 44df4a1f 871e97bd 1399721e 98c35b39 b14babd7 f5cdf09f 5c29c30e
+1076e409 f9e82015 711fc0d8 02cc4c7a 2e2d0cfe f237c614 9d697803 3839256c
+dffde3b0 10dfa6cd 62bee1a0 bca9edc5 d0038145 28d7bab6 0443430a ef6bf16c
+87288399 76cc9b5f 8ce1a73a 9235cdf9 bad41483 a95aad35 f6e174a7 6d0021f0
+f3ca8462 cf18beed 06ccffff 60b9d16b f1cda774 e8492459 ea68fb6e 80c7b931
+0b1fb35e 39bc5ef2 f2713262 aafe0fed 0319f677 17f92168 9a481526 888cf7f3
+7f6cc77a 631907f6 cf186d31 23ce972d b75e5b05 90527ee0 cf219155 9a855373
+ca6383a9 34bafe91 94883d03 65ed4d1f 8bf36934 3d0ecb16 75724d02 d4baeb68
+94ed9173 968549a4 0dfe73c6 fdbc0294 07c5bcfa 481d1858 0c643c62 8d9da082
+4a3574f5 96a95c34 0d96351f 476cda9a 1331f36c abf255f8 3e780f4f 23ba1cbc
+11c7e9c8 caefa821 c4ab8269 fdbc3956 acae2208 cd0507fb ca72d0e6 52e2c069
+f9559380 47c72f6f a52bdbc8 246ad5e2 d15f694d add0dc67 276f3d66 f0215bd5
+35c742e0 8f8ef55b 69e9b883 923f8fd6 351a8f03 a28cf6c7 8f5e59fc 771fcd94
+77928d42 435f7ef5 4629157e 2a710bce a0c8af6d 0c619f9f bcae35f2 37763114
+a66d7f23 7d7bcdb2 312ee495 8500144a aeb4c31b fec4ac0a c7c33783 b46194e3
+75649902 e56f33ce 7b90bbc4 2b833dda 55ec2967 5db5503a 517a1ac1 56ed382b
+511dea3c f11fa280 23f932d5 54b5a6ef a0172394 1e26f4e3 bdffd6f9 48e65f96
+9022b3b6 b70fb714 e0c73276 1a8728b4 832566b8 8a10fe65 ee8f97ab a891b63c
+658cf4ec ec8db780 9773bb7c c6349618 e686c705 894e6ba3 46d61bb1 303bcf90
+4e399c0d f7a7fdef 20ba8e24 a0c885a6 eea4b561 7ee3d124 9fc9cfd0 a46f2016
+````
+grouped in bundles of 32 bits.
 
 ### Can I Use Draupnir in my Commercial Project?
 
