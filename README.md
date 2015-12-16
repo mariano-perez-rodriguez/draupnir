@@ -1,14 +1,30 @@
 # Draupnir
 The Draupnir RNG.
 
+## Index
+
 - [Quick Start](#quick-start)
 - [What's in a name?](#whats-in-a-name)
 - [Usage](#usage)
+ - [Command Line](#command-line)
+ - [Library](#library)
 - [How Draupnir Works](#how-draupnir-works)
+ - [The Sponge Construction](#the-sponge-construction)
+ - [Draupnir's State Change Function](#draupnirs-state-change-function)
+ - [Draupnir's Output](#draupnirs-output)
+ - [Draupnir's Input](#draupnirs-input)
 - [Dieharder Results](#dieharder-results)
 - [FAQs](#faqs)
+ - [What Systems does Draupnir Work on?](#what-systems-does-draupnir-work-on)
+ - [Is Draupnir Cryptographically Secure?](#is-draupnir-cryptographically-secure)
+ - [How Fast is Draupnir?](#how-fast-is-draupnir)
+ - [Is Draupnir Recommended for Password Hashing?](#is-draupnir-recommended-for-password-hashing)
+ - [Are there any Test Vectors Available?](#are-there-any-test-vectors-available)
+ - [Can I Use Draupnir in my Commercial Project?](#can-i-use-draupnir-in-my-commercial-project)
 - [Contributing](#contributing)
 - [License](#license)
+
+* * *
 
 ## Quick Start
 
