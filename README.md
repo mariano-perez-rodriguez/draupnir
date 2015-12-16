@@ -135,6 +135,21 @@ As an example of the generality of this construction (see the link above for man
 
 ### Draupnir's State Change Function
 
+Draupnir's general design allows for a state change function parameterized by a _hash_ function. A hash function _H : __2__<sup>\*</sup> → __2__<sup>k</sup>_ (where ___2___ represents the set containing the numbers 0 and 1) is used to construct a _(k × k)_-bit _state_.
+
+In its current implementation, Draupnir only supports the _crc64_ hash, which takes an arbitrary length string and transforms it into a 64 bit hashed result (nb. we're working on adding additional hashes to Draupnir's repertoire).
+
+Given the hash function _H_, and the _(k × k)_-bit state _S_, Draupnir generates a new _(k × k)_-bit state _T_ as follows:
+
+- let _T_ be a "temporary" _(k × k)_-bit state,
+- for _0 ≤ i < k_, do:
+ - apply _H_ to the _i_-th row of _S_, store the result as the _i_-th column of _T_,
+- overwrite _S_ with _T_.
+
+That's it!
+
+What this state change function does is calculate the hash by _rows_ and store it by _columns_, nothing more.
+
 ### Draupnir's Output
 
 ### Draupnir's Input
