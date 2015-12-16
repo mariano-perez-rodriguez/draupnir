@@ -146,7 +146,7 @@ Given the hash function _H_, and the _(k × k)_-bit state _S_, Draupnir generate
  - apply _H_ to the _i_-th row of _S_, store the result as the _i_-th column of _T_,
 - overwrite _S_ with _T_.
 
-That's it!
+(nb, rows are numbered from 0 up to _k - 1_ inclusive) That's it!
 
 What this state change function does is calculate the hash by _rows_ and store it by _columns_, nothing more. If you dont't believe me, take a look at the next picture:
 
@@ -159,9 +159,9 @@ Simple, right?
 Draupnir's output is _k_ bits long, and is computed thus:
 
 - the output bit at position _i_, when _i_ is __odd__, is the _i_-th bit of the _i_-th row of _S_,
-- the output bit at position _i_, when _i_ is __even__, is the _i_-th bit of the _(k - i + 1)_-th row of _S_,
+- the output bit at position _i_, when _i_ is __even__, is the _i_-th bit of the _(k - i - 1)_-th row of _S_,
 
-if that sounded complicated, here's a picture:
+(nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
 ![Output Diagram](doc/OutputDiagram.png)
 
@@ -174,9 +174,9 @@ After outputting a value, the state change function is applied a configurable nu
 When soaking data into Draupnir's sponge, the the first thing to do is pad the data using a _multi-rate padding_ scheme: a string of the form ___1 0<sup>p</sup> 1___ is appended to the data, choosing a _0 ≤ p < k - 2_ that would make the length of the so padded data a multiple of _k_. Now each block of _k_ bits is fed into _S_ thus:
 
 - the input bit at position _i_, when _i_ is __even__, overwrites the _i_-th bit of the _i_-th row of _S_,
-- the input bit at position _i_, when _i_ is __odd__, overwrites the _i_-th bit of the _(k - i + 1)_-th row of _S_,
+- the input bit at position _i_, when _i_ is __odd__, overwrites the _i_-th bit of the _(k - i - 1)_-th row of _S_,
 
-if that sounded complicated, here's a picture:
+(nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
 ![Output Diagram](doc/OutputDiagram.png)
 
