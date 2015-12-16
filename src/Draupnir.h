@@ -321,9 +321,6 @@ class DraupnirCrc64Builder {
  *
  */
 class DraupnirCrc64 {
-  // needed in order for DraupnirCrc64Builder to call the protected constructor
-  friend DraupnirCrc64Builder;
-
   public:
     /**
      * State description structure
