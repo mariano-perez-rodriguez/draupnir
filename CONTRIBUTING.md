@@ -2,6 +2,16 @@
 
 This document briefly describes the contribution guidelines to be observed when contributing to Draupnir.
 
+## Index
+
+- [Coding Style](#coding-style)
+- [Filename Conventions](#filename-conventions)
+- [Coding Conventions](#coding-conventions)
+- [Testing](#testing)
+- [Licensing](#licensing)
+
+* * *
+
 ## Coding Style
 
 Draupnir follows an indentation style reminiscent of the [1TBS](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS) (ie. "one True Brace Style"). If you're using Eclipse CDT, you can find a style definition XML in [extras/DraupnirStyle.xml](./extras/DraupnirStyle.xml).
