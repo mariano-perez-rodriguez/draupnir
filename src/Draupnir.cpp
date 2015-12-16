@@ -895,6 +895,15 @@ DraupnirCrc64Builder &DraupnirCrc64Builder::initialState(std::uint8_t const __in
 }
 
 /**
+ * Force the building of a Draupnir RNG (useful for "auto" type specifiers)
+ *
+ * @return the constructed DraupnirCrc64 object
+ */
+DraupnirCrc64 DraupnirCrc64Builder::build() noexcept {
+  return DraupnirCrc64(*this);
+}
+
+/**
  * Protected default constructor
  *
  * The constructor is protected to only allow construction through Draupnir.
