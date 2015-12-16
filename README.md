@@ -71,6 +71,8 @@ Draupnir can be used either as a standalone command line program, or as a librar
 
 ### Command Line
 
+See [doc/MANUAL.md](doc/MANUAL.md) for more information.
+
 ### Library
 
 In order to use Draupnir in your projects, you must simply include `Draupnir.h` and link against `Draupnir.so` (see [INSTALL.md](./INSTALL.md) for building instructions).
@@ -104,6 +106,8 @@ auto r = Draupnir::crc64().initialState(Draupnir::invGamma).build();
 note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `DraupnirCrc64Builder` instead of `DraupnirCrc64` (but, this may be what you want: having a pre-specified builder).
 
 Actually, `Draupnir` acts as a static class, providing named static constants (eg. `Draupnir::invGamma`) and [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (`crc64` is the only one for now). The named constructors in `Draupnir` each generate an object of type `DraupnirXXXBuilder`, where `XXX` is the "flavor" being constructed (`crc64` in this case), these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" `DraupnirXXX` (`DraupnirCrc64` in this case) object.
+
+See [doc/MANUAL.md](doc/MANUAL.md) for more information.
 
 ## How Draupnir Works
 
