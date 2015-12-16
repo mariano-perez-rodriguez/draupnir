@@ -57,6 +57,38 @@ Draupnir can be used either as a standalone command line program, or as a librar
 
 ### Library
 
+In order to use Draupnir in your projects, you must simply include `Draupnir.h` and link against `Draupnir.so` (see [INSTALL.md](./INSTALL.md) for building instructions).
+
+Now you can write:
+
+````cpp
+DraupnirCrc64 r = Draupnir::crc64();
+````
+
+for the default configuration, or, for instance:
+
+````cpp
+DraupnirCrc64 r = Draupnir::crc64().initialState(Draupnir::invGamma);
+````
+
+to have Draupnir initialized with _1 / γ_.
+
+If you're running `C++11` or above and want to use the `auto` type specifier you'll need to write:
+
+````cpp
+auto r = Draupnir::crc64().build();
+````
+
+or
+
+````cpp
+auto r = Draupnir::crc64().initialState(Draupnir::invGamma).build();
+````
+
+note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `DraupnirCrc64Builder` instead of `DraupnirCrc64` (but, this may be what you want: having a pre-specified builder).
+
+Actually, `Draupnir` acts as a static class, providing named static constants (eg. `Draupnir::invGamma`) and [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (`crc64` is the only one for now). The named constructors in `Draupnir` each generate an object of type `DraupnirXXXBuilder`, where `XXX` is the "flavor" being constructed (`crc64` in this case), these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" `DraupnirXXX` (`DraupnirCrc64` in this case) object.
+
 ## How Draupnir Works
 
 - [The Sponge Construction](#the-sponge-construction)
@@ -65,7 +97,7 @@ Draupnir can be used either as a standalone command line program, or as a librar
 - [Draupnir's Input](#draupnirs-input)
 
 Draupnir is based off of the concept of a _Cryptographic Sponge_ (see: [The Sponge Functions Corner](http://sponge.noekeon.org/)): a construction
-that allows for a _reseedable_ and _splittable_ RNG to be built; nothe though, that Draupnir is _not_ a cryptographic sponge in the strictest sense: its "input rate state-space" and "output rate state-space" are not identical.
+that allows for a _reseedable_ and _splittable_ RNG to be built; note though, that Draupnir is _not_ a cryptographic sponge in the strictest sense: its "input rate state-space" and "output rate state-space" are not identical.
 
 One of Draupnir's most central objectives is to be easy to understand and allow for a clean implementation.
 
