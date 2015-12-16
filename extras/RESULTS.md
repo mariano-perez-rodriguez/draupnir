@@ -26,6 +26,27 @@ The following constants (and their inverses) are used to initialize the Draupnir
 
 all of them were chosen because they are transcendental (or strongly suspected to be) and non-biased.
 
+### Index
+
+- [Initial State = _π_](#initial-state--π)
+- [Initial State = _e_](#initial-state--e)
+- [Initial State = _γ_](#initial-state--γ)
+- [Initial State = _Ω_](#initial-state--Ω)
+- [Initial State = _1 / π_](#initial-state--1--π)
+- [Initial State = _1 / e_](#initial-state--1--e)
+- [Initial State = _1 / γ_](#initial-state--1--γ)
+- [Initial State = _1 / Ω_](#initial-state--1--Ω)
+- [Initial State = _√2_](#initial-state--2)
+- [Initial State = _√3_](#initial-state--3)
+- [Initial State = _√5_](#initial-state--5)
+- [Initial State = _√7_](#initial-state--7)
+- [Initial State = _√11_](#initial-state--11)
+- [Initial State = _1 / √2_](#initial-state--1--2)
+- [Initial State = _1 / √3_](#initial-state--1--3)
+- [Initial State = _1 / √5_](#initial-state--1--5)
+- [Initial State = _1 / √7_](#initial-state--1--7)
+- [Initial State = _1 / √11_](#initial-state--1--11)
+
 ## Initial State = _π_
 
 
