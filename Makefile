@@ -153,7 +153,7 @@ CC_WARN_FLAGS += -Wcast-qual -Wcast-align -Wuseless-cast -Wold-style-cast -Wconv
 CC_WARN_FLAGS += -Wconditionally-supported
 CC_WARN_FLAGS += -Wdate-time
 CC_WARN_FLAGS += -Wlogical-op
-CC_WARN_FLAGS += -Waggregate-return
+#CC_WARN_FLAGS += -Waggregate-return  # just annoying
 CC_WARN_FLAGS += -Wmissing-declarations -Wredundant-decls
 CC_WARN_FLAGS += -Wnormalized=nfkc
 CC_WARN_FLAGS += -Wpacked -Wpadded
