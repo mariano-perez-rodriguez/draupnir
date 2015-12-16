@@ -135,7 +135,7 @@ As an example of the generality of this construction (see the link above for man
 
 ### Draupnir's State Change Function
 
-Draupnir's general design allows for a state change function parameterized by a _hash_ function. A hash function _H : **2**<sup>✱</sup> → **2**<sup>k</sup>_ (where ___2___ represents the set containing the numbers 0 and 1) is used to construct a _(k × k)_-bit _state_.
+Draupnir's general design allows for a state change function parameterized by a _hash_ function. A hash function _H : **2**<sup>✱</sup> → **2**<sup>k</sup>_ (where ___2___ represents the set containing the numbers 0 and 1) is used to construct a _(k × k)_-bit _state_. The only restriction is that _k_ must be an _even_ number.
 
 In its current implementation, Draupnir only supports the _crc64_ hash, which takes an arbitrary length string and transforms it into a 64 bit hashed result (nb. we're working on adding additional hashes to Draupnir's repertoire).
 
@@ -148,11 +148,41 @@ Given the hash function _H_, and the _(k × k)_-bit state _S_, Draupnir generate
 
 That's it!
 
-What this state change function does is calculate the hash by _rows_ and store it by _columns_, nothing more.
+What this state change function does is calculate the hash by _rows_ and store it by _columns_, nothing more. If you dont't believe me, take a look at the next picture:
+
+![State Change Function diagram](doc/stateChangeFunctionDiagram.png)
+
+Simple, right?
 
 ### Draupnir's Output
 
+Draupnir's output is _k_ bits long, and is computed thus:
+
+- the output bit at position _i_, when _i_ is __odd__, is the _i_-th bit of the _i_-th row of _S_,
+- the output bit at position _i_, when _i_ is __even__, is the _i_-th bit of the _(k - i + 1)_-th row of _S_,
+
+if that sounded complicated, here's a picture:
+
+![Output Diagram](doc/OutputDiagram.png)
+
+Note that it simply amounts to taking alternating bits from the NE and SE diagonals of _S_.
+
+After outputting a value, the state change function is applied a configurable number of times (just once by default).
+
 ### Draupnir's Input
+
+When soaking data into Draupnir's sponge, the data is first padded using a _multi-rate padding_ scheme: a string of the form _1 0<sup>*p*</sup> 1_ is appended to the datam choosing a _p_ that would make the length of the so padded data a multiple of _k_. Now each block of _k_ bits is fed into _S_ thus:
+
+- the input bit at position _i_, when _i_ is __even__, overwrites the _i_-th bit of the _i_-th row of _S_,
+- the input bit at position _i_, when _i_ is __odd__, overwrites the _i_-th bit of the _(k - i + 1)_-th row of _S_,
+
+if that sounded complicated, here's a picture:
+
+![Output Diagram](doc/OutputDiagram.png)
+
+Note that this is the same operation used for output, using the diagonal bits not used then.
+
+After inputting a value, the state change function is applied a configurable number of times (8, by default).
 
 ## [Dieharder](http://www.phy.duke.edu/~rgb/General/dieharder.php) Results
 
