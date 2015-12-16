@@ -22,6 +22,8 @@ The following constants (and their inverses) are used to initialize the Draupnir
 
 all of them were chosen because they are transcendental (or strongly suspected to be) and non-biased.
 
+* * *
+
 ### Index
 
 - [Initial State = _π_](#initial-state--π)
