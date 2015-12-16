@@ -272,7 +272,7 @@ __tl;dr: NO.__
 
 ### Are there any Test Vectors Available?
 
-Here are the first 1024 bytes generated using the default configuration:
+Here are the first 1024 bytes generated using the default configuration (ECMA generator, all-1s initial value, all-1s xoring mask, 8 soaking rounds, 1 squeezing round, and π initial state):
 
 ````
 6f60f4f0 a8909e47 edfe5bac 31d1057d 21bf17a1 70154574 dba6fba7 aa7a75d6
