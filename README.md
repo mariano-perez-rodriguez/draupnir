@@ -222,8 +222,9 @@ Here are the results in a table:
 |       dab_filltree2|    1|      5000000|            1| 0.10770671|  PASSED   |
 |        dab_monobit2|   12|     65000000|            1| 0.07515807|  PASSED   |
 
-
 Where only the last result of an ambiguity resolution run is shown.
+
+See [extras/RESULTS.md](extras/RESULTS.md) for more.
 
 ## FAQs
 
@@ -309,6 +310,8 @@ a66d7f23 7d7bcdb2 312ee495 8500144a aeb4c31b fec4ac0a c7c33783 b46194e3
 4e399c0d f7a7fdef 20ba8e24 a0c885a6 eea4b561 7ee3d124 9fc9cfd0 a46f2016
 ````
 grouped in bundles of 32 bits.
+
+See [extras/TESTVECTORS.md](extras/TESTVECTORS.md) for more.
 
 ### Can I Use Draupnir in my Commercial Project?
 
