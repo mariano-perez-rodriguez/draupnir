@@ -224,7 +224,7 @@ Here are the results in a table:
 
 Where only the last result of an ambiguity resolution run is shown.
 
-See [extras/RESULTS.md](extras/RESULTS.md) for more.
+See [doc/RESULTS.md](doc/RESULTS.md) for more.
 
 ## FAQs
 
@@ -311,7 +311,7 @@ a66d7f23 7d7bcdb2 312ee495 8500144a aeb4c31b fec4ac0a c7c33783 b46194e3
 ````
 grouped in bundles of 32 bits.
 
-See [extras/TESTVECTORS.md](extras/TESTVECTORS.md) for more.
+See [doc/TESTVECTORS.md](doc/TESTVECTORS.md) for more.
 
 ### Can I Use Draupnir in my Commercial Project?
 
