@@ -6,6 +6,32 @@
  > Everyone is permitted to copy and distribute verbatim copies
  > of this license document, but changing it is not allowed.
 
+## Index
+
+- [Preamble](#preamble)
+- [TRMS AND CONDITIONS](#terms-and-conditions)
+ - [Definitions](#definitions)
+ - [1. Source Code](#1-source-code)
+ - [2. basic Permissions](#2-basic-permissions)
+ - [3. Protecting Users' Legal Rights From Anti-Circumvention Law](#3-protecting-users-legal-rights-from-anti-circumvention-law)
+ - [4. Conveying Verbatim Copies](#conveying-verbatim-copies)
+ - [5. Conveying Modified Source Versions](#5-conveying-modified-source-versions)
+ - [6. Conveying Non-Source Forms](#6-conveying-non-source-forms)
+ - [7. Additional Terms](#7-additional-terms)
+ - [8. Termination](#8-termination)
+ - [9. Acceptance Not Required for Having Copies](#9-acceptance-not-required-for-having-copies)
+ - [10. Automatic Licensing of Downstream Recipients](#10-automatic-licensing-of-downstream-recipients)
+ - [11. Patents](#11-patents)
+ - [12. No Surrender of Others' Freedom](#12-no-surrender-of-others-freedom)
+ - [13. Remote Network Interaction; Use with the GNU General Public License](#13-remote-network-interaction-use-with-the-gnu-general-public-license)
+ - [14. Revised Versions of this License](#14-revised-versions-of-this-license)
+ - [15. Disclaimer of Warranty](#15-disclaimer-of-warranty)
+ - [16. Limitation of Liability](#16-limitation-of-liability)
+ - [17. Interpretation of Sections 15 and 16](#17-interpretation-of-sections-15-and-16)
+- [How to Apply These Terms to Your New Programs](#how-to-apply-these-terms-to-your-new-programs)
+
+* * *
+
 ### Preamble
 
 The GNU Affero General Public License is a free, copyleft license for software and other kinds of works, specifically designed to ensure cooperation with the community in the case of network server software.
