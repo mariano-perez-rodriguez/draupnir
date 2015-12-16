@@ -1,9 +1,11 @@
 #include <iostream>
 
+#include "Draupnir.h"
+
 using namespace std;
 
 static void showLogo() {
-  cout << "\n"
+  cerr << "\n"
           "---------------------------\n"
           "   /\\                      \n"
           "   \\/  Draupnir v0.0.1     \n"
@@ -15,11 +17,17 @@ static void showLogo() {
 int main(int argc, char *argv[]) {
   showLogo();
 
-  cout << "Arguments:" << endl;
+  cerr << "Arguments:" << endl;
   for (int i = 0; i < argc; i++) {
-    cout << "  " << i << ": " << argv[i] << endl;
+    cerr << "  " << i << ": " << argv[i] << endl;
   }
-  cout << endl;
+  cerr << endl;
+
+  DraupnirCrc64 d = Draupnir::crc64();
+
+  while (true) {
+    cout << d.getByte();
+  }
 
   return 0;
 }
