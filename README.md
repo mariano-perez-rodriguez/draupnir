@@ -171,7 +171,7 @@ After outputting a value, the state change function is applied a configurable nu
 
 ### Draupnir's Input
 
-When soaking data into Draupnir's sponge, the data is first padded using a _multi-rate padding_ scheme: a string of the form _1 0<sup>*p*</sup> 1_ is appended to the datam choosing a _p_ that would make the length of the so padded data a multiple of _k_. Now each block of _k_ bits is fed into _S_ thus:
+When soaking data into Draupnir's sponge, the data is first padded using a _multi-rate padding_ scheme: a string of the form ___1 0<sup>p</sup> 1___ is appended to the data, choosing a _0 ≤ p < k - 2_ that would make the length of the so padded data a multiple of _k_. Now each block of _k_ bits is fed into _S_ thus:
 
 - the input bit at position _i_, when _i_ is __even__, overwrites the _i_-th bit of the _i_-th row of _S_,
 - the input bit at position _i_, when _i_ is __odd__, overwrites the _i_-th bit of the _(k - i + 1)_-th row of _S_,
