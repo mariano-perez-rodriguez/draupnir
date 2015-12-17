@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/DraupnirLogo.png?raw=true" alt="Draupnir" style="background-color: transparent" />
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/DraupnirLogo.png?raw=true" alt="Draupnir" />
 </p>
 
 ## Index
@@ -68,7 +68,9 @@ _Draupnir_ is a mythologcal artifact mentioned in the Norse mythos. To quote [Wi
 
 We took Draupnir's ability to multiply itself as a metaphor for the RNG in question to _split_ according to different sub-salts given. In all
 truth, this is a property of the _sponge_ construction, not specific to Draupnir itself, but since the name is as cool as the hypothetical son
-of James Bond and Riddick would be, it kinda stuck.
+of James Bond and Lagertha would be, it kinda stuck.
+
+Incidentally, Draupnir's symbol is the [Othala rune](https://en.wikipedia.org/wiki/Othala_rune), commonly associated with Odin (the owner of the ring in qustion).
 
 ## Usage
 
