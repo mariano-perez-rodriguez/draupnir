@@ -1,5 +1,5 @@
 <p align="center">
-  <img href="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/DraupnirLogo.png?raw=true" alt="Draupnir" />
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/DraupnirLogo.png?raw=true" alt="Draupnir" />
 </p>
 
 ## Index
