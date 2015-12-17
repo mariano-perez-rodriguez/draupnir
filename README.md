@@ -32,7 +32,13 @@
 In order to clone the repository, just do:
 
 ````sh
-git clone https://github.com/mariano-perez-rodriguez/draupnir.git
+git clone 'https://github.com/mariano-perez-rodriguez/draupnir.git'
+````
+
+or
+
+````
+git clone 'git@github.com:mariano-perez-rodriguez/draupnir.git'
 ````
 
 this will create a directory called `draupnir` under the current one, containing the repository.
