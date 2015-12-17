@@ -909,7 +909,14 @@ DraupnirCrc64 DraupnirCrc64Builder::build() noexcept {
  * The constructor is protected to only allow construction through Draupnir.
  *
  */
-DraupnirCrc64Builder::DraupnirCrc64Builder() noexcept : _generator {0x42f0e1eba9ea3693ull}, _initialValue {~0ull}, _xorValue {~0ull}, _soakingRounds {8}, _squeezingRounds {1} {
+DraupnirCrc64Builder::DraupnirCrc64Builder() noexcept
+:
+_generator {0x42f0e1eba9ea3693ull},
+_initialValue {~0ull},
+_xorValue {~0ull},
+_soakingRounds {8},
+_squeezingRounds {1}
+{
   for (std::size_t i = 0; i < 512; i++) {
     _initialState[i] = Draupnir::pi[i];
   }
@@ -921,8 +928,9 @@ DraupnirCrc64Builder::DraupnirCrc64Builder() noexcept : _generator {0x42f0e1eba9
  *
  * @param builder  A DraupnirCrc64Builder object to use for parameters
  */
-DraupnirCrc64::DraupnirCrc64(const DraupnirCrc64Builder &builder) noexcept
-  : DraupnirCrc64 {builder._generator, builder._initialValue, builder._xorValue, builder._soakingRounds, builder._squeezingRounds, builder._initialState}
+DraupnirCrc64::DraupnirCrc64(DraupnirCrc64Builder const &builder) noexcept
+  :
+DraupnirCrc64 {builder._generator, builder._initialValue, builder._xorValue, builder._soakingRounds, builder._squeezingRounds, builder._initialState}
 {
 }
 
@@ -946,7 +954,7 @@ DraupnirCrc64 *DraupnirCrc64::clone() const noexcept {
  * @param __initialState  Initial state to use, defaults to pi
  * @return the constructed object
  */
-DraupnirCrc64 *DraupnirCrc64::create(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, const std::uint8_t __initialState[512]) const noexcept {
+DraupnirCrc64 *DraupnirCrc64::create(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) const noexcept {
   return new DraupnirCrc64(__generator, __initialValue, __xorValue, __soakingRounds, __squeezingRounds, __initialState);
 }
 
@@ -984,7 +992,7 @@ std::uint8_t DraupnirCrc64::getByte() noexcept {
  * @param len  Length of the byte stream
  * @return the soaked object
  */
-DraupnirCrc64 &DraupnirCrc64::putBytes(const std::uint8_t *data, std::size_t len) noexcept {
+DraupnirCrc64 &DraupnirCrc64::putBytes(std::uint8_t const *data, std::size_t len) noexcept {
   std::size_t i;
 
   // deal with 64-bit chunks
@@ -1040,8 +1048,8 @@ DraupnirCrc64 &DraupnirCrc64::step(std::size_t count) noexcept {
  * @param __initialState  State to reset to, defaults to pi
  * @return the reset object
  */
-DraupnirCrc64 &DraupnirCrc64::reset(const std::uint8_t __initialState[512]) noexcept {
-  const std::uint64_t *init = reinterpret_cast<const std::uint64_t *>(__initialState);
+DraupnirCrc64 &DraupnirCrc64::reset(std::uint8_t const __initialState[512]) noexcept {
+  std::uint64_t const *init = reinterpret_cast<std::uint64_t const *>(__initialState);
   for (std::size_t i = 0; i < 64; i++) {
     _state[i] = init[i];
   }
@@ -1062,6 +1070,9 @@ DraupnirCrc64::state_t DraupnirCrc64::state() const noexcept {
   result.soakingRounds   = _soakingRounds;
   result.squeezingRounds = _squeezingRounds;
   for (std::size_t i = 0; i < 64; i++) {
+    result.initialState[i] = _initialState.get()[i];
+  }
+  for (std::size_t i = 0; i < 64; i++) {
     result.state[i] = _state[i];
   }
   return result;
@@ -1077,8 +1088,17 @@ DraupnirCrc64::state_t DraupnirCrc64::state() const noexcept {
  * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
  * @param __initialState  Initial state to use, defaults to pi
  */
-DraupnirCrc64::DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, const std::uint8_t __initialState[512]) noexcept
-  : _generator {__generator}, _crc {__initialValue}, _initialValue {__initialValue}, _xorValue {__xorValue}, _soakingRounds {__soakingRounds}, _squeezingRounds {__squeezingRounds}, _remaining {0}, _crcTable {buildTable(_generator), std::default_delete<std::uint64_t[]>()}
+DraupnirCrc64::DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) noexcept
+  :
+_generator {__generator},
+_crc {__initialValue},
+_initialValue {__initialValue},
+_xorValue {__xorValue},
+_soakingRounds {__soakingRounds},
+_squeezingRounds {__squeezingRounds},
+_initialState {copyState(reinterpret_cast<std::uint64_t const *>(__initialState)), std::default_delete<std::uint64_t[]>()},
+_remaining {0},
+_crcTable {buildTable(_generator), std::default_delete<std::uint64_t[]>()}
 {
   reset(__initialState);
 }
@@ -1169,5 +1189,19 @@ std::uint64_t *DraupnirCrc64::buildTable(std::uint64_t __generator) noexcept {
 
   // return the generated table
   return table;
+}
+
+/**
+ * Create a new[] state and copy the given one
+ *
+ * @param __state  State to copy
+ * @return a new[]-allocated copy of the given state
+ */
+std::uint64_t *DraupnirCrc64::copyState(std::uint64_t const *__state) noexcept {
+  std::uint64_t *result = new std::uint64_t[64];
+  for (std::size_t i = 0; i < 64; i++) {
+    result[i] = __state[i];
+  }
+  return result;
 }
 

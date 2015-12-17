@@ -179,7 +179,7 @@ class DraupnirCrc64Builder {
      * Copy constructor (defaulted) - should not be needed either way
      *
      */
-    DraupnirCrc64Builder(const DraupnirCrc64Builder &other) noexcept = default;
+    DraupnirCrc64Builder(DraupnirCrc64Builder const &other) noexcept = default;
 
     /**
      * Move constructor (defaulted) - should not be needed either way
@@ -192,7 +192,7 @@ class DraupnirCrc64Builder {
      *
      * @return a reference to the current object
      */
-    DraupnirCrc64Builder &operator=(const DraupnirCrc64Builder &other) noexcept = default;
+    DraupnirCrc64Builder &operator=(DraupnirCrc64Builder const &other) noexcept = default;
 
     /**
      * Move-assignment operator (defaulted) - should not be needed either way
@@ -371,6 +371,12 @@ class DraupnirCrc64 {
       std::size_t squeezingRounds;
 
       /**
+       * Initial internal state array
+       *
+       */
+      std::uint64_t initialState[64];
+
+      /**
        * Internal state array
        *
        */
@@ -382,13 +388,13 @@ class DraupnirCrc64 {
      *
      * @param builder  A DraupnirCrc64Builder object to use for parameters
      */
-    DraupnirCrc64(const DraupnirCrc64Builder &builder) noexcept;
+    DraupnirCrc64(DraupnirCrc64Builder const &builder) noexcept;
 
     /**
      * Copy constructor (defaulted)
      *
      */
-    DraupnirCrc64(const DraupnirCrc64 &other) noexcept = default;
+    DraupnirCrc64(DraupnirCrc64 const &other) noexcept = default;
 
     /**
      * Move constructor (defaulted)
@@ -401,7 +407,7 @@ class DraupnirCrc64 {
      *
      * @return a reference to the current object
      */
-    DraupnirCrc64 &operator=(const DraupnirCrc64 &other) noexcept = default;
+    DraupnirCrc64 &operator=(DraupnirCrc64 const &other) noexcept = default;
 
     /**
      * Move-assignment operator (defaulted)
@@ -434,7 +440,7 @@ class DraupnirCrc64 {
      * @param __initialState  Initial state to use, defaults to pi
      * @return the constructed object
      */
-    virtual DraupnirCrc64 *create(std::uint64_t __generator = 0x42f0e1eba9ea3693ull, std::uint64_t __initialValue = ~0ull, std::uint64_t __xorValue = ~0ull, std::size_t __soakingRounds = 8, std::size_t __squeezingRounds = 1, const std::uint8_t __initialState[512] = Draupnir::pi) const noexcept;
+    virtual DraupnirCrc64 *create(std::uint64_t __generator = 0x42f0e1eba9ea3693ull, std::uint64_t __initialValue = ~0ull, std::uint64_t __xorValue = ~0ull, std::size_t __soakingRounds = 8, std::size_t __squeezingRounds = 1, std::uint8_t const __initialState[512] = Draupnir::pi) const noexcept;
 
     /**
      * Extract a byte from the RNG
@@ -455,7 +461,7 @@ class DraupnirCrc64 {
      * @param len  Length of the byte stream
      * @return the soaked object
      */
-    DraupnirCrc64 &putBytes(const std::uint8_t *data, std::size_t len) noexcept;
+    DraupnirCrc64 &putBytes(std::uint8_t const *data, std::size_t len) noexcept;
 
     /**
      * Apply a transformation step
@@ -476,7 +482,7 @@ class DraupnirCrc64 {
      * @param __initialState  State to reset to, defaults to pi
      * @return the reset object
      */
-    DraupnirCrc64 &reset(const std::uint8_t __initialState[512] = Draupnir::pi) noexcept;
+    DraupnirCrc64 &reset(std::uint8_t const __initialState[512] = Draupnir::pi) noexcept;
 
     /**
      * Extract a state description structure
@@ -496,7 +502,7 @@ class DraupnirCrc64 {
      * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
      * @param __initialState  Initial state to use, defaults to pi
      */
-    DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, const std::uint8_t __initialState[512]) noexcept;
+    DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) noexcept;
 
     /**
      * Apply the transformation function to the Draupnir sponge
@@ -525,6 +531,14 @@ class DraupnirCrc64 {
      * @return a new[]-allocated lookup table
      */
     static std::uint64_t *buildTable(std::uint64_t __generator) noexcept;
+
+    /**
+     * Create a new[] state and copy the given one
+     *
+     * @param __state  State to copy
+     * @return a new[]-allocated copy of the given state
+     */
+    static std::uint64_t *copyState(std::uint64_t const *__state) noexcept;
 
   private:
     /**
@@ -562,6 +576,12 @@ class DraupnirCrc64 {
      *
      */
     std::size_t _squeezingRounds;
+
+    /**
+     * Initial internal state
+     *
+     */
+    std::shared_ptr<std::uint64_t> _initialState;
 
     /**
      * Main internal state
