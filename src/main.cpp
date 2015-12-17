@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/**
+ * Print the Draupnir logo to cerr
+ *
+ */
 static void showLogo() {
   cerr << "\n"
           "---------------------------\n"
@@ -31,3 +35,4 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
+
