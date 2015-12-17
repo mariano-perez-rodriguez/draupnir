@@ -14,6 +14,7 @@
   - [Draupnir's State Change Function](#draupnirs-state-change-function)
   - [Draupnir's Output](#draupnirs-output)
   - [Draupnir's Input](#draupnirs-input)
+  - [Odds and Ends](#odds-and-ends)
 - [Dieharder Results](#dieharder-results)
 - [FAQs](#faqs)
   - [What Systems does Draupnir Work on?](#what-systems-does-draupnir-work-on)
@@ -122,6 +123,7 @@ See [doc/MANUAL.md](doc/MANUAL.md) for more information.
 - [Draupnir's State Change Function](#draupnirs-state-change-function)
 - [Draupnir's Output](#draupnirs-output)
 - [Draupnir's Input](#draupnirs-input)
+- [Odds and Ends](#odds-and-ends)
 
 Draupnir is based off of the concept of a _Cryptographic Sponge_ (see: [The Sponge Functions Corner](http://sponge.noekeon.org/)): a construction
 that allows for a _reseedable_ and _splittable_ RNG to be built; note though, that Draupnir is _not_ a cryptographic sponge in the strictest sense: its "input rate state-space" and "output rate state-space" are not identical.
@@ -195,9 +197,18 @@ Note that this is the same operation used for output, using the diagonal bits no
 
 After inputting each block, the state change function is applied a configurable number of times (8, by default).
 
+### Odds and Ends
+
+There's one last detail to consider (and specify for): if the hash function _H_ happens to be able to output a "partial" input hash efficiently, then one may consider running _H_ in _continuous_ mode, generating a hash when needed but considering all the given input data as one big, continuous, stream. So we have:
+
+- __Discrete mode:__ the hash function is applied to each value independently (ie. as if that value was the totality of the stream to hash).
+- __Continuous mode:__ the hash function is applied to each value _incrementally_ (ie. as f that value was just the next "segment" in a continuous stream of data).
+
+In its current implementation, Draupnir works in continuous mode, which effectively increases the state space by the hash function's state size.
+
 ## [Dieharder](http://www.phy.duke.edu/~rgb/General/dieharder.php) Results
 
-Draupnir has been tested with `dieharder 3.31.1`, using the following line:
+Draupnir (in its default configuration) has been tested with `dieharder 3.31.1`, using the following line:
 
 ````sh
 dieharder -a -k 2 -Y 1 -g 201 -f draupnir.samples.bin
