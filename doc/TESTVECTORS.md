@@ -5,7 +5,7 @@ Here we present test vectors for different configurations of the Draupnir RNG.
 ## Index
 
 - [Methodology](#methodology)
- - [About the Constants](#about-the-constants)
+  - [About the Constants](#about-the-constants)
 - [Initial State = _π_](#initial-state--π)
 - [Initial State = _e_](#initial-state--e)
 - [Initial State = _γ_](#initial-state--γ)
