@@ -1,5 +1,6 @@
 # Draupnir
-The Draupnir RNG.
+
+![Draupnir](doc/DraupnirLogo.png)
 
 ## Index
 
@@ -182,7 +183,7 @@ When soaking data into Draupnir's sponge, the the first thing to do is pad the d
 
 (nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
-![Output Diagram](doc/OutputDiagram.png)
+![Input Diagram](doc/InputDiagram.png)
 
 Note that this is the same operation used for output, using the diagonal bits not used then.
 
