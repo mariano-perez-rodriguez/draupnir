@@ -1,6 +1,6 @@
-# Draupnir
-
-![Draupnir](doc/DraupnirLogo.png)
+<p align="center">
+  ![Draupnir](doc/DraupnirLogo.png)
+</p>
 
 ## Index
 
