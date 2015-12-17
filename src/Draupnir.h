@@ -585,7 +585,7 @@ class DraupnirCrc64 {
      * CRC64 lookup table (shared among all siblings of this object)
      *
      */
-    std::shared_ptr<uint64_t> _crcTable;
+    std::shared_ptr<std::uint64_t> _crcTable;
 };
 
 #endif /* DRAUPNIR_H_ */
