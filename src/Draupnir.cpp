@@ -809,6 +809,32 @@ constexpr std::uint8_t Draupnir::invSqrt11[512] = {
 
 
 /**
+ * Default constructor
+ *
+ */
+DraupnirCrc64Builder::DraupnirCrc64Builder() noexcept
+:
+_generator {0x42f0e1eba9ea3693ull},
+_initialValue {~0ull},
+_xorValue {~0ull},
+_soakingRounds {8},
+_squeezingRounds {1}
+{
+  for (std::size_t i = 0; i < 512; i++) {
+    _initialState[i] = Draupnir::pi[i];
+  }
+}
+
+/**
+ * Conversion operator to create a DraupnirCrc64
+ *
+ * @return the constructed DraupnirCrc64
+ */
+DraupnirCrc64Builder::operator DraupnirCrc64() const noexcept {
+  return DraupnirCrc64(_generator, _initialValue, _xorValue, _soakingRounds, _squeezingRounds, _initialState);
+}
+
+/**
  * Virtual copy constructor - should not be needed either way
  *
  * @return the constructed object
@@ -900,38 +926,33 @@ DraupnirCrc64Builder &DraupnirCrc64Builder::initialState(std::uint8_t const __in
  * @return the constructed DraupnirCrc64 object
  */
 DraupnirCrc64 DraupnirCrc64Builder::build() noexcept {
-  return DraupnirCrc64(*this);
-}
-
-/**
- * Protected default constructor
- *
- * The constructor is protected to only allow construction through Draupnir.
- *
- */
-DraupnirCrc64Builder::DraupnirCrc64Builder() noexcept
-:
-_generator {0x42f0e1eba9ea3693ull},
-_initialValue {~0ull},
-_xorValue {~0ull},
-_soakingRounds {8},
-_squeezingRounds {1}
-{
-  for (std::size_t i = 0; i < 512; i++) {
-    _initialState[i] = Draupnir::pi[i];
-  }
+  return *this;
 }
 
 
 /**
- * Implicit conversion constructor to implement named-constructor-with-named-parameters idiom
+ * DraupnirCrc64 constructor
  *
- * @param builder  A DraupnirCrc64Builder object to use for parameters
+ * @param __generator  Generator polynomial to use, little endian, with its most significant bit omitted, defaults to ECMA
+ * @param __initialValue  Initial value to use for crc, defaults to all-1s
+ * @param __xorValue  Value to XOR with the crc to obtain the result, defaults to all-1s
+ * @param __soakingRounds  Number of transformation rounds to apply after soaking, defaults to 8
+ * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
+ * @param __initialState  Initial state to use, defaults to pi
  */
-DraupnirCrc64::DraupnirCrc64(DraupnirCrc64Builder const &builder) noexcept
+DraupnirCrc64::DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) noexcept
   :
-DraupnirCrc64 {builder._generator, builder._initialValue, builder._xorValue, builder._soakingRounds, builder._squeezingRounds, builder._initialState}
+_generator {__generator},
+_crc {__initialValue},
+_initialValue {__initialValue},
+_xorValue {__xorValue},
+_soakingRounds {__soakingRounds},
+_squeezingRounds {__squeezingRounds},
+_initialState {copyState(reinterpret_cast<std::uint64_t const *>(__initialState)), std::default_delete<std::uint64_t[]>()},
+_remaining {0},
+_crcTable {buildTable(_generator), std::default_delete<std::uint64_t[]>()}
 {
+  reset(__initialState);
 }
 
 /**
@@ -1076,31 +1097,6 @@ DraupnirCrc64::state_t DraupnirCrc64::state() const noexcept {
     result.state[i] = _state[i];
   }
   return result;
-}
-
-/**
- * DraupnirCrc64 constructor
- *
- * @param __generator  Generator polynomial to use, little endian, with its most significant bit omitted, defaults to ECMA
- * @param __initialValue  Initial value to use for crc, defaults to all-1s
- * @param __xorValue  Value to XOR with the crc to obtain the result, defaults to all-1s
- * @param __soakingRounds  Number of transformation rounds to apply after soaking, defaults to 8
- * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
- * @param __initialState  Initial state to use, defaults to pi
- */
-DraupnirCrc64::DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) noexcept
-  :
-_generator {__generator},
-_crc {__initialValue},
-_initialValue {__initialValue},
-_xorValue {__xorValue},
-_soakingRounds {__soakingRounds},
-_squeezingRounds {__squeezingRounds},
-_initialState {copyState(reinterpret_cast<std::uint64_t const *>(__initialState)), std::default_delete<std::uint64_t[]>()},
-_remaining {0},
-_crcTable {buildTable(_generator), std::default_delete<std::uint64_t[]>()}
-{
-  reset(__initialState);
 }
 
 /**

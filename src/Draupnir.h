@@ -169,12 +169,13 @@ class Draupnir {
  *
  */
 class DraupnirCrc64Builder {
-  // needed in order for Draupnir to call the protected constructor
-  friend Draupnir;
-  // needed in order for DraupnirCrc64 to inspect the protected members
-  friend DraupnirCrc64;
-
   public:
+    /**
+     * Default constructor
+     *
+     */
+    DraupnirCrc64Builder() noexcept;
+
     /**
      * Copy constructor (defaulted) - should not be needed either way
      *
@@ -206,6 +207,13 @@ class DraupnirCrc64Builder {
      *
      */
     virtual ~DraupnirCrc64Builder() noexcept = default;
+
+    /**
+     * Conversion operator to create a DraupnirCrc64
+     *
+     * @return the constructed DraupnirCrc64
+     */
+    operator DraupnirCrc64() const noexcept;
 
     /**
      * Virtual copy constructor - should not be needed either way
@@ -277,15 +285,6 @@ class DraupnirCrc64Builder {
     DraupnirCrc64 build() noexcept;
 
   protected:
-    /**
-     * Protected default constructor
-     *
-     * The constructor is protected to only allow construction through Draupnir.
-     *
-     */
-    DraupnirCrc64Builder() noexcept;
-
-  private:
     /**
      * Generator parameter
      *
@@ -384,11 +383,16 @@ class DraupnirCrc64 {
     };
 
     /**
-     * Implicit conversion constructor to implement named-constructor-with-named-parameters idiom
+     * DraupnirCrc64 constructor
      *
-     * @param builder  A DraupnirCrc64Builder object to use for parameters
+     * @param __generator  Generator polynomial to use, little endian, with its most significant bit omitted, defaults to ECMA
+     * @param __initialValue  Initial value to use for crc, defaults to all-1s
+     * @param __xorValue  Value to XOR with the crc to obtain the result, defaults to all-1s
+     * @param __soakingRounds  Number of transformation rounds to apply after soaking, defaults to 8
+     * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
+     * @param __initialState  Initial state to use, defaults to pi
      */
-    DraupnirCrc64(DraupnirCrc64Builder const &builder) noexcept;
+    DraupnirCrc64(std::uint64_t __generator = 0x42f0e1eba9ea3693ull, std::uint64_t __initialValue = ~0ull, std::uint64_t __xorValue = ~0ull, std::size_t __soakingRounds = 8, std::size_t __squeezingRounds = 1, std::uint8_t const __initialState[512] = Draupnir::pi) noexcept;
 
     /**
      * Copy constructor (defaulted)
@@ -492,18 +496,6 @@ class DraupnirCrc64 {
     state_t state() const noexcept __attribute__((pure)) ;
 
   protected:
-    /**
-     * DraupnirCrc64 constructor
-     *
-     * @param __generator  Generator polynomial to use, little endian, with its most significant bit omitted, defaults to ECMA
-     * @param __initialValue  Initial value to use for crc, defaults to all-1s
-     * @param __xorValue  Value to XOR with the crc to obtain the result, defaults to all-1s
-     * @param __soakingRounds  Number of transformation rounds to apply after soaking, defaults to 8
-     * @param __squeezingRounds  Rounds  Number of transformation rounds to apply after squeezing, defaults to 1
-     * @param __initialState  Initial state to use, defaults to pi
-     */
-    DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, std::uint8_t const __initialState[512]) noexcept;
-
     /**
      * Apply the transformation function to the Draupnir sponge
      *
