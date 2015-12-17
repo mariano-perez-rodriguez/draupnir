@@ -1078,7 +1078,7 @@ DraupnirCrc64::state_t DraupnirCrc64::state() const noexcept {
  * @param __initialState  Initial state to use, defaults to pi
  */
 DraupnirCrc64::DraupnirCrc64(std::uint64_t __generator, std::uint64_t __initialValue, std::uint64_t __xorValue, std::size_t __soakingRounds, std::size_t __squeezingRounds, const std::uint8_t __initialState[512]) noexcept
-  : _generator {__generator}, _crc {__initialValue}, _initialValue {__initialValue}, _xorValue {__xorValue}, _soakingRounds {__soakingRounds}, _squeezingRounds {__squeezingRounds}, _remaining {0}, _crcTable {buildTable(_generator)}
+  : _generator {__generator}, _crc {__initialValue}, _initialValue {__initialValue}, _xorValue {__xorValue}, _soakingRounds {__soakingRounds}, _squeezingRounds {__squeezingRounds}, _remaining {0}, _crcTable {buildTable(_generator), std::default_delete<std::uint64_t[]>()}
 {
   reset(__initialState);
 }
