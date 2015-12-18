@@ -85,18 +85,24 @@ See [doc/MANUAL.md](doc/MANUAL.md) for more information.
 
 ### Library
 
-In order to use Draupnir in your projects, you must simply include `Draupnir.h` and link against `Draupnir.so` (see [INSTALL.md](./INSTALL.md) for building instructions).
+In order to use Draupnir in your projects, you must simply include `Draupnir.h` and the "Draupnir Module" header file (these are named `DraupnirXXX.h`, where `XXX` identifies the module).
 
 Now you can write:
 
 ````cpp
-DraupnirCrc64 r = Draupnir::crc64();
+#include "Draupnir.h"
+#include "DraupnirCrc64.h"
+
+Draupnir::Crc64 r = Draupnir::crc64();
 ````
 
 for the default configuration, or, for instance:
 
 ````cpp
-DraupnirCrc64 r = Draupnir::crc64().initialState(Draupnir::invGamma);
+#include "Draupnir.h"
+#include "DraupnirCrc64.h"
+
+Draupnir::Crc64 r = Draupnir::crc64().initialState(Draupnir::invGamma);
 ````
 
 to have Draupnir initialized with _1 / γ_.
@@ -104,18 +110,24 @@ to have Draupnir initialized with _1 / γ_.
 If you're running `C++11` or above and want to use the `auto` type specifier you'll need to write:
 
 ````cpp
+#include "Draupnir.h"
+#include "DraupnirCrc64.h"
+
 auto r = Draupnir::crc64().build();
 ````
 
 or
 
 ````cpp
+#include "Draupnir.h"
+#include "DraupnirCrc64.h"
+
 auto r = Draupnir::crc64().initialState(Draupnir::invGamma).build();
 ````
 
-note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `DraupnirCrc64Builder` instead of `DraupnirCrc64` (but, this may be what you want: having a pre-specified builder).
+note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `Draupnir::Crc64Builder` instead of `Draupnir::Crc64` (but, this may be what you want: having a pre-specified builder).
 
-Actually, `Draupnir` acts as a static class, providing named static constants (eg. `Draupnir::invGamma`) and [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (`crc64` is the only one for now). The named constructors in `Draupnir` each generate an object of type `DraupnirXXXBuilder`, where `XXX` is the "flavor" being constructed (`crc64` in this case), these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" `DraupnirXXX` (`DraupnirCrc64` in this case) object.
+Actually, `Draupnir` acts as a staging namespace, providing named constants (eg. `Draupnir::invGamma`) and [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (`crc64` is the only one for now). The named constructors in `Draupnir` each generate an object of type `Draupnir::XXXBuilder`, where `XXX` is the "flavor" being constructed (`crc64` in this case), these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" `Draupnir::XXX` (`Draupnir::Crc64` in this case) object.
 
 See [doc/MANUAL.md](doc/MANUAL.md) for more information.
 
