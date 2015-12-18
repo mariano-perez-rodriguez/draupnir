@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Draupnir.h"
+#include "DraupnirCrc64.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   }
   cerr << endl;
 
-  DraupnirCrc64 d = Draupnir::crc64();
+  Draupnir::Crc64 d = Draupnir::crc64();
 
   while (true) {
     cout << d.getByte();
