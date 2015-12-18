@@ -169,7 +169,7 @@ What this state change function does is calculate the hash by _rows_ and store i
   <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/stateChangeFunctionDiagram.png?raw=true" alt="State Change Function diagram" />
 </p>
 
-Simple, right?
+Simple, right? (_do_ note, though, that in the diagram we're displaying an _(8 × 8)_-bit state, _not_ a byte-per-byte representation of a 64-bit version of Draupnir).
 
 ### Draupnir's Output
 
@@ -184,7 +184,7 @@ Draupnir's output is _k_ bits long, and is computed thus:
   <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/outputDiagram.png?raw=true" alt="Output diagram" />
 </p>
 
-Note that it simply amounts to taking alternating bits from the NE and SE diagonals of _S_.
+Note that it simply amounts to taking alternating bits from the NE and SE diagonals of _S_ (note, though, that in the diagram we're displaying an _(8 × 8)_-bit state, _not_ a byte-per-byte representation of a 64-bit version of Draupnir).
 
 After outputting a value, the state change function is applied a configurable number of times (just once by default).
 
@@ -201,7 +201,7 @@ When soaking data into Draupnir's sponge, the the first thing to do is pad the d
   <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/inputDiagram.png?raw=true" alt="Input diagram" />
 </p>
 
-Note that this is the same operation used for output, using the diagonal bits not used then.
+Note that this is the same operation used for output, using the diagonal bits not used then (note, though, that in the diagram we're displaying an _(8 × 8)_-bit state, _not_ a byte-per-byte representation of a 64-bit version of Draupnir).
 
 After inputting each block, the state change function is applied a configurable number of times (8, by default).
 
