@@ -165,7 +165,9 @@ Given the hash function _H_, and the _(k × k)_-bit state _S_, Draupnir generate
 
 What this state change function does is calculate the hash by _rows_ and store it by _columns_, nothing more. If you dont't believe me, take a look at the next picture:
 
-![State Change Function diagram](doc/stateChangeFunctionDiagram.png)
+<p align="center">
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/stateChangeFunctionDiagram.png?raw=true" alt="State Change Function diagram" />
+</p>
 
 Simple, right?
 
@@ -178,7 +180,9 @@ Draupnir's output is _k_ bits long, and is computed thus:
 
 (nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
-![Output Diagram](doc/outputDiagram.png)
+<p align="center">
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/outputDiagram.png?raw=true" alt="Output diagram" />
+</p>
 
 Note that it simply amounts to taking alternating bits from the NE and SE diagonals of _S_.
 
@@ -193,7 +197,9 @@ When soaking data into Draupnir's sponge, the the first thing to do is pad the d
 
 (nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
-![Input Diagram](doc/inputDiagram.png)
+<p align="center">
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/inputDiagram.png?raw=true" alt="Input diagram" />
+</p>
 
 Note that this is the same operation used for output, using the diagonal bits not used then.
 
