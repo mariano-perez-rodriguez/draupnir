@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/DraupnirLogo.png?raw=true" alt="Draupnir" />
+  <img src="https://github.com/mariano-perez-rodriguez/draupnir/blob/master/doc/draupnirLogo.png?raw=true" alt="Draupnir" />
 </p>
 
 ## Index
@@ -178,7 +178,7 @@ Draupnir's output is _k_ bits long, and is computed thus:
 
 (nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
-![Output Diagram](doc/OutputDiagram.png)
+![Output Diagram](doc/outputDiagram.png)
 
 Note that it simply amounts to taking alternating bits from the NE and SE diagonals of _S_.
 
@@ -193,7 +193,7 @@ When soaking data into Draupnir's sponge, the the first thing to do is pad the d
 
 (nb, both rows and bits are numbered from 0 up to _k - 1_ inclusive) if that sounded complicated, here's a picture:
 
-![Input Diagram](doc/InputDiagram.png)
+![Input Diagram](doc/inputDiagram.png)
 
 Note that this is the same operation used for output, using the diagonal bits not used then.
 
