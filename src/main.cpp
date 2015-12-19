@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include "DraupnirCrc64.h"
-
 using namespace std;
 
 /**
@@ -26,18 +24,6 @@ int main(int argc, char *argv[]) {
     cerr << "  " << i << ": " << argv[i] << endl;
   }
   cerr << endl;
-
-  cerr << sizeof(unsigned char) << endl;
-  cerr << sizeof(unsigned short) << endl;
-  cerr << sizeof(unsigned) << endl;
-  cerr << sizeof(unsigned long) << endl;
-  cerr << sizeof(unsigned long long) << endl;
-return 0;
-  Draupnir::Crc64 d = Draupnir::crc64();
-
-  while (true) {
-    cout << d.getByte();
-  }
 
   return 0;
 }
