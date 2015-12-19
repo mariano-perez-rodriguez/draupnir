@@ -27,6 +27,12 @@ int main(int argc, char *argv[]) {
   }
   cerr << endl;
 
+  cerr << sizeof(unsigned char) << endl;
+  cerr << sizeof(unsigned short) << endl;
+  cerr << sizeof(unsigned) << endl;
+  cerr << sizeof(unsigned long) << endl;
+  cerr << sizeof(unsigned long long) << endl;
+return 0;
   Draupnir::Crc64 d = Draupnir::crc64();
 
   while (true) {
