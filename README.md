@@ -91,18 +91,16 @@ Now you can write:
 
 ````cpp
 #include "Draupnir.h"
-#include "DraupnirCrc64.h"
 
-Draupnir::Crc64 r = Draupnir::crc64();
+Draupnir::CrcSponge64 r = Draupnir::CrcSponge64Builder();
 ````
 
 for the default configuration, or, for instance:
 
 ````cpp
 #include "Draupnir.h"
-#include "DraupnirCrc64.h"
 
-Draupnir::Crc64 r = Draupnir::crc64().initialState(Draupnir::invGamma);
+Draupnir::CrcSponge64 r = Draupnir::CrcSponge64Builder().initialState(Draupnir::invGamma);
 ````
 
 to have Draupnir initialized with _1 / γ_.
@@ -111,23 +109,21 @@ If you're running `C++11` or above and want to use the `auto` type specifier you
 
 ````cpp
 #include "Draupnir.h"
-#include "DraupnirCrc64.h"
 
-auto r = Draupnir::crc64().build();
+auto r = Draupnir::CrcSponge64Builder().build();
 ````
 
 or
 
 ````cpp
 #include "Draupnir.h"
-#include "DraupnirCrc64.h"
 
-auto r = Draupnir::crc64().initialState(Draupnir::invGamma).build();
+auto r = Draupnir::CrcSponge64Builder().initialState(Draupnir::invGamma).build();
 ````
 
-note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `Draupnir::Crc64Builder` instead of `Draupnir::Crc64` (but, this may be what you want: having a pre-specified builder).
+note the `.build()` method call added; otherwise, `r`'s type will be deduced to be `Draupnir::CrcSponge64Builder` instead of `Draupnir::CrcSponge64` (but, this may be what you want: having a pre-specified builder).
 
-Actually, `Draupnir` acts as a staging namespace, providing named constants (eg. `Draupnir::invGamma`) and [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (`crc64` is the only one for now). The named constructors in `Draupnir` each generate an object of type `Draupnir::XXXBuilder`, where `XXX` is the "flavor" being constructed (`crc64` in this case), these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" `Draupnir::XXX` (`Draupnir::Crc64` in this case) object.
+Actually, `Draupnir` acts as a staging namespace, providing named constants (eg. `Draupnir::invGamma`) and `typedef`s. We provide [named constructors](https://isocpp.org/wiki/faq/ctors#named-ctor-idiom) (eg. `Draupnir::CrcSponge64Builder`) where these in turn act as [named parameter](https://isocpp.org/wiki/faq/ctors#named-parameter-idiom) realizations of the "actual" Draupnir generator (eg. `Draupnir::CrcSponge64`) objects.
 
 See [doc/MANUAL.md](doc/MANUAL.md) for more information.
 
@@ -408,7 +404,7 @@ __tl;dr: NO.__
 
 ### Are there any Test Vectors Available?
 
-Here are the first 1024 bytes generated using the default configuration (ECMA generator, all-1s initial value, all-1s xoring mask, 8 soaking rounds, 1 squeezing round, and π initial state):
+Here are the first 1024 bytes generated using the default configuration (64 bits, ECMA generator, all-1s initial value, all-1s xoring mask, 8 soaking rounds, 1 squeezing round, and π initial state):
 
 ````
 6f60f4f0 a8909e47 edfe5bac 31d1057d 21bf17a1 70154574 dba6fba7 aa7a75d6

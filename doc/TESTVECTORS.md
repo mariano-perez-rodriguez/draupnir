@@ -29,7 +29,7 @@ Here we present test vectors for different configurations of the Draupnir RNG.
 
 ## Methodology
 
-The only parameter changed is the initial state, the generator is fixed to the ECMA one, the initial value and xoring mask are fixed to the all-1s pattern, the soaking rounds parameter is fixed to 8, and the squeezing rounds parameter is fixed to 1.
+The only parameter changed is the initial state, the width is fixed to 64 bits, the generator is fixed to the ECMA one, the initial value and xoring mask are fixed to the all-1s pattern, the soaking rounds parameter is fixed to 8, and the squeezing rounds parameter is fixed to 1.
 
 The test vectors are presented as the first 1024 bytes generated, organized as hexadecimal numbers in 32 bit bundles.
 
