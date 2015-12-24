@@ -10,18 +10,6 @@
 
 namespace Draupnir {
 
-  // explicit instantiations
-  template class CrcSponge<std::uint64_t>;
-  template class CrcSponge<std::uint32_t>;
-  template class CrcSponge<std::uint16_t>;
-  template class CrcSponge<std::uint8_t>;
-
-  template class CrcSpongeBuilder<std::uint64_t>;
-  template class CrcSpongeBuilder<std::uint32_t>;
-  template class CrcSpongeBuilder<std::uint16_t>;
-  template class CrcSpongeBuilder<std::uint8_t>;
-
-
   // utility typedefs
   typedef CrcSponge<std::uint64_t> CrcSponge64;
   typedef CrcSponge<std::uint32_t> CrcSponge32;
