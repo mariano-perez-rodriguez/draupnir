@@ -1,5 +1,5 @@
-#ifndef CRC_SPONGE_H__
-#define CRC_SPONGE_H__
+#ifndef DRAUPNIR_CRC_SPONGE_H__
+#define DRAUPNIR_CRC_SPONGE_H__
 
 #include <cstdint>
 #include <memory>
@@ -216,5 +216,5 @@ namespace Draupnir {
 
 #include "CrcSponge.hpp"
 
-#endif /* CRC_SPONGE_H__ */
+#endif /* DRAUPNIR_CRC_SPONGE_H__ */
 

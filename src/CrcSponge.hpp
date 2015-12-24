@@ -1,5 +1,5 @@
-#ifndef CRC_SPONGE_HPP__
-#define CRC_SPONGE_HPP__
+#ifndef DRAUPNIR_CRC_SPONGE_HPP__
+#define DRAUPNIR_CRC_SPONGE_HPP__
 
 #include "CrcSponge.h"
 
@@ -225,5 +225,5 @@ namespace Draupnir {
 
 }
 
-#endif /* CRC_SPONGE_HPP__ */
+#endif /* DRAUPNIR_CRC_SPONGE_HPP__ */
 

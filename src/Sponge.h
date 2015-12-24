@@ -1,5 +1,5 @@
-#ifndef SPONGE_H__
-#define SPONGE_H__
+#ifndef DRAUPNIR_SPONGE_H__
+#define DRAUPNIR_SPONGE_H__
 
 #include <cstdint>
 
@@ -64,5 +64,5 @@ namespace Draupnir {
 
 }
 
-#endif /* SPONGE_H__ */
+#endif /* DRAUPNIR_SPONGE_H__ */
 

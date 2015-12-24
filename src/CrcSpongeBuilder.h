@@ -1,5 +1,5 @@
-#ifndef CRC_SPONGE_BUILDER_H__
-#define CRC_SPONGE_BUILDER_H__
+#ifndef DRAUPNIR_CRC_SPONGE_BUILDER_H__
+#define DRAUPNIR_CRC_SPONGE_BUILDER_H__
 
 #include <cstdint>
 #include <array>
@@ -202,5 +202,5 @@ namespace Draupnir {
 
 #include "CrcSpongeBuilder.hpp"
 
-#endif /* CRC_SPONGE_BUILDER_H__ */
+#endif /* DRAUPNIR_CRC_SPONGE_BUILDER_H__ */
 

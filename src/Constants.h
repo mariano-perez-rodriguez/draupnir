@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_H__
-#define CONSTANTS_H__
+#ifndef DRAUPNIR_CONSTANTS_H__
+#define DRAUPNIR_CONSTANTS_H__
 
 #include <cstdint>
 #include <array>
@@ -144,5 +144,5 @@ namespace Draupnir {
 
 }
 
-#endif /* CONSTANTS_H__ */
+#endif /* DRAUPNIR_CONSTANTS_H__ */
 
