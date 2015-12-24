@@ -44,30 +44,43 @@ Every non-`static`, non anonymous (ie. defined in an empty namespace) function _
 Every header file _must_ use include guards, and such include guards must follow the form:
 
 ````c++
-#ifndef NAME_OF_INCLUDE_FILE_H_
-#define NAME_OF_INCLUDE_FILE_H_
+#ifndef NAME_OF_INCLUDE_FILE_H__
+#define NAME_OF_INCLUDE_FILE_H__
 
 ...
 
-#endif /* NAME_OF_INCLUDE_FILE_H_ */
+#endif /* NAME_OF_INCLUDE_FILE_H__ */
 ````
 
-Ie. the name of the guard constant must be the un-camelCased name of the header file, followed by `_H_`; a comment stating the name of the header guard must follow the `#endif` directive. ___No code whatsoever is allowed before the include guard___, including comments, preprocessor directives or blank lines. Exceptions can be made, but they will be extremely rare.
+Ie. the name of the guard constant must be the un-camelCased name of the header file, followed by `_H__`; a comment stating the name of the header guard must follow the `#endif` directive. ___No code whatsoever is allowed before the include guard___, including comments, preprocessor directives or blank lines. Exceptions can be made, but they will be extremely rare.
 
-Each template class must be defined in a file with `.hpp` extension. This file must include the header guards of a "normal" header file, but with an `_HPP_` suffix (all previous observations about header files apply in these cases as well). Furthermore, the corresponding header file _must_ include the implementation file as the last statement before the header guard closing, eg:
+Each template class must be defined in a file with `.hpp` extension. This file must include the header guards of a "normal" header file, but with an `_HPP__` suffix (all previous observations about header files apply in these cases as well). Furthermore, the corresponding header file _must_ include the implementation file as the last statement before the header guard closing, eg:
 
 ````c++
-#ifndef NAME_OF_INCLUDE_FILE_H_
-#define NAME_OF_INCLUDE_FILE_H_
+#ifndef NAME_OF_INCLUDE_FILE_H__
+#define NAME_OF_INCLUDE_FILE_H__
 
 ...
 
 #include "NameOfIncludeFile.hpp"
 
-#endif /* NAME_OF_INCLUDE_FILE_H_ */
+#endif /* NAME_OF_INCLUDE_FILE_H__*/
 ````
 
-This is so that problems with template instantiation can be solved in a straightforward (albeit inelegant) way.
+Where the `.hpp` file would be:
+
+````c++
+#ifndef NAME_OF_INCLUDE_FILE_HPP__
+#define NAME_OF_INCLUDE_FILE_HPP__
+
+#include "NameOfIncludeFile.h"
+
+...
+
+#endif /* NAME_OF_INCLUDE_FILE_HPP__*/
+````
+
+This is so that problems with template instantiation can be solved in a straightforward (albeit inelegant) way. Note that the `.hpp` file includes the `.h` file back: this is in order to allow for refactoring templates into plain classes to be simpler and less error-prone.
 
 Template functions should observe the same rules.
 
