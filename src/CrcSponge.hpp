@@ -27,19 +27,20 @@ namespace {
     std::array<T, 256> *table = new std::array<T, 256>();
 
     // calculate initial slice
-    for (std::size_t i = 0; i < 256; i++) {
+    std::size_t i = 0;
+    for (auto &entry : *table) {
       // get the reversed byte to the top
-      (*table)[i] = static_cast<T>(i << offset);
+      entry = static_cast<T>(i++ << offset);
 
       // divide away
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
-      (*table)[i] = static_cast<T>(((*table)[i] << 1) ^ (((*table)[i] & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
+      entry = static_cast<T>((entry << 1) ^ ((entry & highBit) ? generator : zero));
     }
 
     // return the generated table
@@ -94,8 +95,8 @@ namespace {
 
     // process each byte in turn
     std::uint64_t crc = ~0ul;
-    for (std::size_t i = 0; i < message.length(); i++) {
-      crc = crcTable[static_cast<std::uint8_t>(crc) ^ message[i]] ^ (crc >> 8);
+    for (auto chr : message) {
+      crc = crcTable[static_cast<std::uint8_t>(crc) ^ chr] ^ (crc >> 8);
     }
 
     // invert result (detect appended 0s)
@@ -327,8 +328,8 @@ namespace Draupnir {
     // crc
     result << std::hex << std::setw(hexWidth) << std::setfill('0') << _crc << '.';
     // matrix
-    for (std::size_t i = 0; i < bitSize; i++) {
-      result << std::hex << std::setw(hexWidth) << std::setfill('0') << _state[i];
+    for (auto row : _state) {
+      result << std::hex << std::setw(hexWidth) << std::setfill('0') << row;
     }
     result << '.';
     // checksum
