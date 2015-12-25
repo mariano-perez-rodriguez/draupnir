@@ -2,6 +2,7 @@
 #define DRAUPNIR_SPONGE_H__
 
 #include <cstdint>
+#include <string>
 
 namespace Draupnir {
 
@@ -38,13 +39,12 @@ namespace Draupnir {
       virtual std::uint8_t squeeze() noexcept = 0;
 
       /**
-       * Soak a byte array into the sponge - pure virtual
+       * Soak a string into the sponge - pure virtual
        *
-       * @param data  Byte array's pointer
-       * @param len  Byte array's length
+       * @param data  String to soak
        * @return the soaked sponge
        */
-      virtual Sponge &soak(std::uint8_t const *data, std::size_t len) noexcept = 0;
+      virtual Sponge &soak(std::string const data) noexcept = 0;
 
       /**
        * Apply a transformation step - pure virtual
@@ -60,6 +60,13 @@ namespace Draupnir {
        * @return the reset sponge
        */
       virtual Sponge &reset() noexcept = 0;
+
+      /**
+       * Dump the sponge's state as a string
+       *
+       * @return the dumped state
+       */
+      virtual std::string dump() const noexcept = 0;
   };
 
 }

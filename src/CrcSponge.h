@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <memory>
 #include <array>
+#include <string>
 
 #include "Sponge.h"
 
@@ -98,13 +99,12 @@ namespace Draupnir {
       virtual std::uint8_t squeeze() noexcept;
 
       /**
-       * Soak a byte array into the sponge
+       * Soak a string into the sponge
        *
-       * @param data  Byte array's pointer
-       * @param len  Byte array's length
+       * @param data  String to soak
        * @return the soaked sponge
        */
-      virtual CrcSponge &soak(std::uint8_t const *data, std::size_t len) noexcept;
+      virtual CrcSponge &soak(std::string const data) noexcept;
 
       /**
        * Apply a transformation step
@@ -120,6 +120,13 @@ namespace Draupnir {
        * @return the reset sponge
        */
       virtual CrcSponge &reset() noexcept;
+
+      /**
+       * Dump the sponge's state as a string
+       *
+       * @return the dumped state
+       */
+      virtual std::string dump() const noexcept;
 
     protected:
       /**
