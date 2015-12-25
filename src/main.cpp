@@ -1,4 +1,5 @@
 #include "Draupnir.h"
+#include "Random.h"
 
 
 #include <iostream>

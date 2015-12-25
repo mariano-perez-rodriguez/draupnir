@@ -12,6 +12,8 @@ This is Draupnir's usage manual.
   - [Generating Random Natural Numbers](#generating-random-natural-numbers)
   - [Generating Random Real Numbers](#generating-random-real-numbers)
   - [Generating Random Permutations](#generating-random-permutations)
+    - [Cycles](#cycles)
+    - [Derangements](#derangements)
   - [Generating Random Samples With Replacement](#generating-random-samples-with-replacement)
     - [Unweighted](#unweighted)
     - [Weighted](#weighted)
@@ -42,6 +44,10 @@ This is Draupnir's usage manual.
 ### Generating Random Real Numbers
 
 ### Generating Random Permutations
+
+#### Cycles
+
+#### Derangements
 
 ### Generating Random Samples With Replacement
 
