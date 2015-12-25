@@ -69,7 +69,7 @@ namespace Draupnir {
        * @param __generator  Generator polynomial to use - given in non-reversed form with its most significant bit omitted
        * @return the current CrcSpongeBuilder
        */
-      CrcSpongeBuilder &generator(T __generator) noexcept;
+      CrcSpongeBuilder &generator(T const &__generator) noexcept;
 
       /**
        * Set the initial value to use
@@ -77,7 +77,7 @@ namespace Draupnir {
        * @param __initialValue  Initial value to adopt for the running crc
        * @return the current CrcSpongeBuilder
        */
-      CrcSpongeBuilder &initialValue(T __initialValue) noexcept;
+      CrcSpongeBuilder &initialValue(T const &__initialValue) noexcept;
 
       /**
        * Set the xor value to use
@@ -85,7 +85,7 @@ namespace Draupnir {
        * @param __xorValue  Value to xor with the running crc to generate a partial output
        * @return the current CrcSpongeBuilder
        */
-      CrcSpongeBuilder &xorValue(T __xorValue) noexcept;
+      CrcSpongeBuilder &xorValue(T const &__xorValue) noexcept;
 
       /**
        * Set the number of soaking rounds to use
@@ -109,7 +109,7 @@ namespace Draupnir {
        * @param __initialState  Initial state to adopt
        * @return the current CrcSpongeBuilder
        */
-      CrcSpongeBuilder &initialState(std::array<T, CrcSponge<T>::bitSize> const __initialState) noexcept;
+      CrcSpongeBuilder &initialState(std::array<T, CrcSponge<T>::bitSize> const &__initialState) noexcept;
 
       /**
        * Explicitly build the specified CrcSponge

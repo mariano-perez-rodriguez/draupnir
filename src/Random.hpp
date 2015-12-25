@@ -54,7 +54,7 @@ namespace Draupnir {
      * @return a random number between 0 and the given limit fitting in the templated length
      */
     template <typename T>
-    T natural(Draupnir::Sponge &s, T const high) {
+    T natural(Draupnir::Sponge &s, T high) {
       T result = rand<T>(s);
 
       if (high != std::numeric_limits<T>::max()) {
@@ -90,7 +90,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> permutation(Draupnir::Sponge &s, std::size_t const size) {
+    std::vector<std::size_t> permutation(Draupnir::Sponge &s, std::size_t size) {
       std::vector<std::size_t> result;
       result.reserve(size);
       for (std::size_t i = 0; i < size; i++) {
@@ -114,7 +114,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> cycle(Draupnir::Sponge &s, std::size_t const size) {
+    std::vector<std::size_t> cycle(Draupnir::Sponge &s, std::size_t size) {
       std::vector<std::size_t> result;
       result.reserve(size);
       result[0] = 0;
@@ -140,7 +140,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> derangement(Draupnir::Sponge &s, std::size_t const size) {
+    std::vector<std::size_t> derangement(Draupnir::Sponge &s, std::size_t size) {
       std::vector<std::size_t> result = permutation(s, size);
       while (!isDerangement(result)) {
         result = permutation(s, size);
@@ -156,7 +156,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
+    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t total, std::size_t size) {
       std::vector<std::size_t> result;
       for (std::size_t i = 0; i < size; i++) {
         result[i] = natural<std::size_t>(s, total);
@@ -172,7 +172,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
+    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t total, std::size_t size) {
       std::vector<std::size_t> result;
       for (std::size_t i = 0; i < size; i++) {
         result[i] = i;
@@ -194,7 +194,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
+    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const &parts, std::size_t size) {
       // copy parts to weights, set multiplicities to 1, and calculate total weight
       std::vector<std::size_t> weight, alias, mult;
       std::size_t num = parts.size(), total = 0;
@@ -245,7 +245,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
+    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const &parts, std::size_t size) {
       std::vector<std::size_t> result;
       std::size_t sum = 0;
       for (std::size_t i = 0; i < size; i++) {

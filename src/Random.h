@@ -18,7 +18,7 @@ namespace Draupnir {
      * @return a random number between 0 and the given limit fitting in the templated length
      */
     template <typename T>
-    T natural(Draupnir::Sponge &s, T const high = std::numeric_limits<T>::max());
+    T natural(Draupnir::Sponge &s, T high = std::numeric_limits<T>::max());
 
     /**
      * Generate a random real value between 0 and 1
@@ -39,7 +39,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> permutation(Draupnir::Sponge &s, std::size_t const size);
+    std::vector<std::size_t> permutation(Draupnir::Sponge &s, std::size_t size);
 
     /**
      * Generate a random cyclic permutation of the given size
@@ -52,7 +52,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> cycle(Draupnir::Sponge &s, std::size_t const size);
+    std::vector<std::size_t> cycle(Draupnir::Sponge &s, std::size_t size);
 
     /**
      * Generate a random derangement of the given size
@@ -66,7 +66,7 @@ namespace Draupnir {
      * @param size  Permutation size
      * @return a std::vector containing the generated permutation
      */
-    std::vector<std::size_t> derangement(Draupnir::Sponge &s, std::size_t const size);
+    std::vector<std::size_t> derangement(Draupnir::Sponge &s, std::size_t size);
 
     /**
      * Generate a uniform sampling with replacement (ie. simply a vector of random naturals)
@@ -76,7 +76,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
+    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t total, std::size_t size);
 
     /**
      * Generate a uniform sampling without replacement using reservoir sampling
@@ -86,7 +86,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
+    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t total, std::size_t size);
 
     /**
      * Generate a non-uniform sampling with replacement (ie. simply a vector of number yielded from a Vose method)
@@ -96,7 +96,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
+    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const &parts, std::size_t size);
 
     /**
      * Generate a non-uniform sampling without replacement using Chao's method
@@ -106,7 +106,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
+    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const &parts, std::size_t size);
 
   }
 

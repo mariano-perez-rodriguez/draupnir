@@ -59,7 +59,7 @@ namespace Draupnir {
    * @return the current CrcSpongeBuilder
    */
   template <typename T>
-  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::generator(T __generator) noexcept {
+  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::generator(T const &__generator) noexcept {
     _generator = __generator;
     return *this;
   }
@@ -71,7 +71,7 @@ namespace Draupnir {
    * @return the current CrcSpongeBuilder
    */
   template <typename T>
-  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::initialValue(T __initialValue) noexcept {
+  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::initialValue(T const &__initialValue) noexcept {
     _initialValue = __initialValue;
     return *this;
   }
@@ -83,7 +83,7 @@ namespace Draupnir {
    * @return the current CrcSpongeBuilder
    */
   template <typename T>
-  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::xorValue(T __xorValue) noexcept {
+  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::xorValue(T const &__xorValue) noexcept {
     _xorValue = __xorValue;
     return *this;
   }
@@ -119,7 +119,7 @@ namespace Draupnir {
    * @return the current CrcSpongeBuilder
    */
   template <typename T>
-  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::initialState(std::array<T, CrcSponge<T>::bitSize> const __initialState) noexcept {
+  CrcSpongeBuilder<T> &CrcSpongeBuilder<T>::initialState(std::array<T, CrcSponge<T>::bitSize> const &__initialState) noexcept {
     _initialState = __initialState;
     return *this;
   }

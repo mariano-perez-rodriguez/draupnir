@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <vector>
 
 #include "CrcSponge.h"
 
@@ -51,8 +52,8 @@ namespace {
    * @param message  Message to calculate the crc64 for
    * @return the calculated crc64
    */
-  std::uint64_t ecmaCrc64(std::string const message) noexcept __attribute__((const));
-  std::uint64_t ecmaCrc64(std::string const message) noexcept {
+  std::uint64_t ecmaCrc64(std::string const &message) noexcept __attribute__((const));
+  std::uint64_t ecmaCrc64(std::string const &message) noexcept {
     // This table was generated for the ECMA polynomial (ie. 0x42f0e1eba9ea3693)
     // using the REVERSED schedule.
     //
@@ -101,6 +102,23 @@ namespace {
     return ~crc;
   }
 
+  /**
+   * Split the given string by the given delimiter
+   *
+   * @param data  Data to split
+   * @param delim  Delimiter character to use
+   * @return a string vector containing the parts in data
+   */
+  std::vector<std::string> splitByDelimiter(std::string const &data, char delim) {
+    std::vector<std::string> result;
+    std::stringstream ss(data);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        result.push_back(item);
+    }
+    return result;
+  }
+
 }
 
 
@@ -117,7 +135,7 @@ namespace Draupnir {
    * @param squeezingRounds  Number of transformation rounds to apply after squeezing out a block
    */
   template <typename T>
-  CrcSponge<T>::CrcSponge(T generator, T initialValue, T xorValue, std::array<T, bitSize> const initialState, std::size_t soakingRounds, std::size_t squeezingRounds) noexcept
+  CrcSponge<T>::CrcSponge(T const &generator, T const &initialValue, T const &xorValue, std::array<T, bitSize> const &initialState, std::size_t soakingRounds, std::size_t squeezingRounds) noexcept
     :
   _soakingRounds {soakingRounds},
   _squeezingRounds {squeezingRounds},
@@ -176,7 +194,7 @@ namespace Draupnir {
    * @return the soaked sponge
    */
   template <typename T>
-  CrcSponge<T> &CrcSponge<T>::soak(std::string const data) noexcept {
+  CrcSponge<T> &CrcSponge<T>::soak(std::string const &data) noexcept {
     std::size_t i, len = data.length();
 
     // deal with bitSize-bit chunks
@@ -213,7 +231,7 @@ namespace Draupnir {
    * @param block  Block to soak
    */
   template <typename T>
-  void CrcSponge<T>::soakBlock(T const block) noexcept {
+  void CrcSponge<T>::soakBlock(T const &block) noexcept {
     _state[0] = static_cast<T>(_state[0] ^ ((_state[0] ^ block) & (highBit | lowBit)));
     for (std::size_t i = 2; i < bitSize; i += 2) {
       // derived from: https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge

@@ -53,7 +53,7 @@ namespace Draupnir {
        * @param soakingRounds  Number of transformation rounds to apply after soaking each block
        * @param squeezingRounds  Number of transformation rounds to apply after squeezing out a block
        */
-      CrcSponge(T generator, T initialValue, T xorValue, std::array<T, bitSize> const initialState, std::size_t soakingRounds, std::size_t squeezingRounds) noexcept;
+      CrcSponge(T const &generator, T const &initialValue, T const &xorValue, std::array<T, bitSize> const &initialState, std::size_t soakingRounds, std::size_t squeezingRounds) noexcept;
 
       /**
        * Copy constructor - defaulted
@@ -96,7 +96,7 @@ namespace Draupnir {
        *
        * @return the squeezed out byte
        */
-      virtual std::uint8_t squeeze() noexcept;
+      virtual std::uint8_t squeeze() noexcept override;
 
       /**
        * Soak a string into the sponge
@@ -104,7 +104,7 @@ namespace Draupnir {
        * @param data  String to soak
        * @return the soaked sponge
        */
-      virtual CrcSponge &soak(std::string const data) noexcept;
+      virtual CrcSponge &soak(std::string const &data) noexcept override;
 
       /**
        * Apply a transformation step
@@ -112,21 +112,21 @@ namespace Draupnir {
        * @param n  Number of transformation steps to apply (defaults to 1)
        * @return the stepped sponge
        */
-      virtual CrcSponge &step(std::size_t n = 1) noexcept;
+      virtual CrcSponge &step(std::size_t n = 1) noexcept override;
 
       /**
        * Reset the sponge to its initial state
        *
        * @return the reset sponge
        */
-      virtual CrcSponge &reset() noexcept;
+      virtual CrcSponge &reset() noexcept override;
 
       /**
        * Dump the sponge's state as a string
        *
        * @return the dumped state
        */
-      virtual std::string dump() const noexcept;
+      virtual std::string dump() const noexcept override;
 
     protected:
       /**
@@ -140,7 +140,7 @@ namespace Draupnir {
        *
        * @param block  Block to soak
        */
-      void soakBlock(T const block) noexcept;
+      void soakBlock(T const &block) noexcept;
 
       /**
        * Apply the state-changing transformation

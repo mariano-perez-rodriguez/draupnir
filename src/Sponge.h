@@ -44,7 +44,7 @@ namespace Draupnir {
        * @param data  String to soak
        * @return the soaked sponge
        */
-      virtual Sponge &soak(std::string const data) noexcept = 0;
+      virtual Sponge &soak(std::string const &data) noexcept = 0;
 
       /**
        * Apply a transformation step - pure virtual
