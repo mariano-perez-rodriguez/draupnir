@@ -156,7 +156,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSamplingWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
+    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
       std::vector<std::size_t> result;
       for (std::size_t i = 0; i < size; i++) {
         result[i] = natural<std::size_t>(s, total);
@@ -172,7 +172,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSamplingWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
+    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size) {
       std::vector<std::size_t> result;
       for (std::size_t i = 0; i < size; i++) {
         result[i] = i;
@@ -194,7 +194,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSamplingWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
+    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
       // copy parts to weights, set multiplicities to 1, and calculate total weight
       std::vector<std::size_t> weight, alias, mult;
       std::size_t num = parts.size(), total = 0;
@@ -245,7 +245,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSamplingWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
+    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size) {
       std::vector<std::size_t> result;
       std::size_t sum = 0;
       for (std::size_t i = 0; i < size; i++) {

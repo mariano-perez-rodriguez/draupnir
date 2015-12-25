@@ -76,7 +76,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSamplingWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
+    std::vector<std::size_t> uniformSampleWithReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
 
     /**
      * Generate a uniform sampling without replacement using reservoir sampling
@@ -86,7 +86,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> uniformSamplingWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
+    std::vector<std::size_t> uniformSampleWithoutReplacement(Draupnir::Sponge &s, std::size_t const total, std::size_t const size);
 
     /**
      * Generate a non-uniform sampling with replacement (ie. simply a vector of number yielded from a Vose method)
@@ -96,7 +96,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSamplingWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
+    std::vector<std::size_t> nonUniformSampleWithReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
 
     /**
      * Generate a non-uniform sampling without replacement using Chao's method
@@ -106,7 +106,7 @@ namespace Draupnir {
      * @param size  Sample size to generate
      * @return a vector holding the sample
      */
-    std::vector<std::size_t> nonUniformSamplingWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
+    std::vector<std::size_t> nonUniformSampleWithoutReplacement(Draupnir::Sponge &s, std::vector<std::size_t> const parts, std::size_t const size);
 
   }
 
