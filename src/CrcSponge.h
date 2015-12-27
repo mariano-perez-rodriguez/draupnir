@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <memory>
 #include <array>
+#include <vector>
 #include <string>
 
 #include "Sponge.h"
@@ -26,6 +27,12 @@ namespace Draupnir {
       static constexpr std::size_t wordSize = sizeof(T);
 
       /**
+       * Crc's size in nibbles
+       *
+       */
+      static constexpr std::size_t nibbleSize = wordSize * 2;
+
+      /**
        * Crc's size in bits
        *
        */
@@ -42,6 +49,17 @@ namespace Draupnir {
        *
        */
       static constexpr T highBit = lowBit << (bitSize - 1);
+
+      /**
+       * Load a dumped state into a new CrcSponge
+       *
+       * @param dump  Dumped state
+       * @param delim  Delimiter character to use (defaults to ':')
+       * @return the constructed CrcSponge
+       * @throws std::invalid_argument in case the version segment is not recognized
+       * @throws whatever loadV* throws
+       */
+      static CrcSponge load(std::string const &dump, char delim = ':');
 
       /**
        * Main constructor
@@ -122,13 +140,36 @@ namespace Draupnir {
       virtual CrcSponge &reset() noexcept override;
 
       /**
-       * Dump the sponge's state as a string
+       * Dump the sponge's state as a string using the current version
        *
+       * @param delim  Delimiter character to use (defaults to ':')
        * @return the dumped state
        */
-      virtual std::string dump() const noexcept override;
+      virtual std::string dump(char delim = ':') const noexcept override;
 
     protected:
+      /**
+       * Load a version 1 dumped state into a new CrcSponge
+       *
+       * @param dump  Dumped state
+       * @param delim  Delimiter character to use (defaults to ':')
+       * @return the constructed CrcSponge
+       * @throws std::invalid_argument in case there are not the required number of parts
+       * @throws std::invalid_argument in case the checksum failed
+       * @throws std::invalid_argument in case a 0 squeezing or soaking round count is given
+       * @throws std::invalid_argument in case an even generator is given
+       * @throws std::domain_error in case the width specified in the dump and the templated one differ
+       */
+      static CrcSponge loadV1(std::vector<std::string> const &parts, char delim = ':');
+
+      /**
+       * Dump the sponge's state as a string using version 1
+       *
+       * @param delim  Delimiter character to use (defaults to ':')
+       * @return the dumped state
+       */
+      std::string dumpV1(char delim = ':') const noexcept;
+
       /**
        * Squeeze out a single block from the sponge
        *

@@ -64,9 +64,10 @@ namespace Draupnir {
       /**
        * Dump the sponge's state as a string
        *
+       * @param delim  Delimiter character to use (defaults to ':')
        * @return the dumped state
        */
-      virtual std::string dump() const noexcept = 0;
+      virtual std::string dump(char delim = ':') const noexcept = 0;
   };
 
 }

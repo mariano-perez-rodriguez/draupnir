@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <stdexcept>
 
 #include "CrcSponge.h"
 
@@ -18,7 +19,7 @@ namespace {
    * @return a 256-entry array of the same type as the generator
    */
   template <typename T>
-  static std::array<T, 256> *buildTable(T const &generator) {
+  static std::array<T, 256> *buildTable(T const &generator) noexcept {
     constexpr T zero = static_cast<T>(0);
     constexpr T highBit = static_cast<T>(1) << ((sizeof(T) * 8) - 1);
     constexpr std::size_t offset = ((sizeof(T) - 1) * 8);
@@ -53,7 +54,6 @@ namespace {
    * @param message  Message to calculate the crc64 for
    * @return the calculated crc64
    */
-  std::uint64_t ecmaCrc64(std::string const &message) noexcept __attribute__((const));
   std::uint64_t ecmaCrc64(std::string const &message) noexcept {
     // This table was generated for the ECMA polynomial (ie. 0x42f0e1eba9ea3693)
     // using the REVERSED schedule.
@@ -120,10 +120,59 @@ namespace {
     return result;
   }
 
+  /**
+   * Parse the given string as if it were an hex number of the templated size
+   *
+   * @param data  String to parse
+   * @return the parsed number
+   * @throws std::invalid_argument if conversion failed
+   * @throws std::out_of_range if value doesn't fit an unsigned long long
+   */
+  template <typename T>
+  constexpr T parseHex(std::string const &data) {
+    return static_cast<T>(std::stoull(data, nullptr, 16));
+  }
+
+  /**
+   * Generic stringstream-based conversion to string
+   *
+   * @param data  Data to convert
+   * @return the string representation of data
+   * @throws whatever the insertion operator for data's type throws
+   */
+  template <typename T>
+  std::string to_string(T const &data) {
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
+  }
+
 }
 
 
 namespace Draupnir {
+
+  /**
+   * Load a dumped state into a new CrcSponge
+   *
+   * @param dump  Dumped state
+   * @param delim  Delimiter character to use (defaults to ':')
+   * @return the constructed CrcSponge
+   * @throws std::invalid_argument in case the version segment is not recognized
+   * @throws whatever loadV* throws
+   */
+  template <typename T>
+  CrcSponge<T> CrcSponge<T>::load(std::string const &dump, char delim) {
+    std::vector<std::string> parts = splitByDelimiter(dump, delim);
+
+    // determine version
+    switch (parseHex<std::size_t>(parts[0])) {
+      case 1:
+        return loadV1(parts, delim);
+      default:
+        throw std::invalid_argument("Unrecognized version: '" + parts[0] + "'");
+    }
+  }
 
   /**
    * CrcSponge main constructor
@@ -301,39 +350,139 @@ namespace Draupnir {
   }
 
   /**
-   * Dump the sponge's state as a string
+   * Dump the sponge's state as a string using the current version
    *
+   * @param delim  Delimiter character to use (defaults to ':')
    * @return the dumped state
    */
   template <typename T>
-  std::string CrcSponge<T>::dump() const noexcept {
-    constexpr std::size_t hexWidth = bitSize / 4;
-
+  std::string CrcSponge<T>::dump(char delim) const noexcept {
     std::stringstream result;
 
     // version
-    result << std::hex << std::setw(4) << std::setfill('0') << 0x0001 << '.';
-    // soak
-    result << std::hex << std::setw(4) << std::setfill('0') << _soakingRounds << '.';
-    // squeeze
-    result << std::hex << std::setw(4) << std::setfill('0') << _squeezingRounds << '.';
-    // width
-    result << std::hex << std::setw(4) << std::setfill('0') << bitSize << '.';
-    // generator
-    result << std::hex << std::setw(hexWidth) << std::setfill('0') << _generator << '.';
-    // mask
-    result << std::hex << std::setw(hexWidth) << std::setfill('0') << _xorValue << '.';
-    // initial
-    result << std::hex << std::setw(hexWidth) << std::setfill('0') << _initialValue << '.';
-    // crc
-    result << std::hex << std::setw(hexWidth) << std::setfill('0') << _crc << '.';
-    // matrix
-    for (auto row : _state) {
-      result << std::hex << std::setw(hexWidth) << std::setfill('0') << row;
+    result << std::hex << std::setw(4) << std::setfill('0') << 0x0001 << delim;
+    result << dumpV1(delim);
+
+    return result.str();
+  }
+
+  /**
+   * Load a version 1 dumped state into a new CrcSponge
+   *
+   * @param dump  Dumped state
+   * @param delim  Delimiter character to use (defaults to ':')
+   * @return the constructed CrcSponge
+   * @throws std::invalid_argument in case there are not the required number of parts
+   * @throws std::invalid_argument in case the checksum failed
+   * @throws std::invalid_argument in case a 0 squeezing or soaking round count is given
+   * @throws std::invalid_argument in case an even generator is given
+   * @throws std::domain_error in case the width specified in the dump and the templated one differ
+   */
+  template <typename T>
+  CrcSponge<T> CrcSponge<T>::loadV1(std::vector<std::string> const &parts, char delim) {
+    // verify parts size
+    if (parts.size() != 11) {
+      throw std::invalid_argument("Malformed dump");
     }
-    result << '.';
+
+    // verify checksum
+    std::string chk;
+    for (std::size_t i = 0; i < 10; i++) {
+      chk += parts[i] + delim;
+    }
+    if (parts[10] != to_string(ecmaCrc64(chk))) {
+      throw std::invalid_argument("Checksum failed");
+    }
+
+    // verify soaking / squeezing rounds
+    std::size_t soakingRounds   = parseHex<std::size_t>(parts[1]);
+    std::size_t squeezingRounds = parseHex<std::size_t>(parts[2]);
+    if (soakingRounds == 0) {
+      throw std::invalid_argument("Zero soaking rounds not allowed");
+    }
+    if (squeezingRounds == 0) {
+      throw std::invalid_argument("Zero squeezing rounds not allowed");
+    }
+
+    // verify width
+    if (bitSize != parseHex<std::size_t>(parts[3])) {
+      throw std::domain_error("Unsupported width: '" + to_string(parseHex<std::size_t>(parts[3])) + "'");
+    }
+
+    // verify generator
+    T generator = parseHex<std::size_t>(parts[4]);
+    if (0 == generator % 2) {
+      throw std::invalid_argument("Even generator: '" + parts[4] + "'");
+    }
+
+    // extract xor value and initial value
+    T xorValue     = parseHex<std::size_t>(parts[5]);
+    T initialValue = parseHex<std::size_t>(parts[6]);
+
+    // extract initial state
+    std::array<T, bitSize> initialState;
+    for (std::size_t i = 0, k = 0; i < parts[7].length(); i += wordSize * 2, k++) {
+      initialState[k] = parseHex<T>(parts[8].substr(i, wordSize * 2));
+    }
+
+    // extract current crc value
+    T crc = parseHex<std::size_t>(parts[8]);
+
+    // extract current state
+    std::array<T, bitSize> state;
+    for (std::size_t i = 0, k = 0; i < parts[9].length(); i += wordSize * 2, k++) {
+      state[k] = parseHex<T>(parts[8].substr(i, wordSize * 2));
+    }
+
+    // build new CrcSponge
+    CrcSponge<T> result = CrcSponge(generator, initialValue, xorValue, initialState, soakingRounds, squeezingRounds);
+
+    // set current crc
+    result._crc = crc;
+    // set current state
+    for (std::size_t i = 0; i < bitSize; i++) {
+      result._state[i] = state[i];
+    }
+
+    return result;
+  }
+
+  /**
+   * Dump the sponge's state as a string using version 1
+   *
+   * @param delim  Delimiter character to use (defaults to ':')
+   * @return the dumped state
+   */
+  template <typename T>
+  std::string CrcSponge<T>::dumpV1(char delim) const noexcept {
+    std::stringstream result;
+
+    // soaking rounds
+    result << std::hex << std::setw(4) << std::setfill('0') << _soakingRounds << delim;
+    // squeezing rounds
+    result << std::hex << std::setw(4) << std::setfill('0') << _squeezingRounds << delim;
+    // width
+    result << std::hex << std::setw(4) << std::setfill('0') << bitSize << delim;
+    // generator
+    result << std::hex << std::setw(nibbleSize) << std::setfill('0') << _generator << delim;
+    // xor value
+    result << std::hex << std::setw(nibbleSize) << std::setfill('0') << _xorValue << delim;
+    // initial value
+    result << std::hex << std::setw(nibbleSize) << std::setfill('0') << _initialValue << delim;
+    // initial state
+    for (auto row : _initialState) {
+      result << std::hex << std::setw(nibbleSize) << std::setfill('0') << row;
+    }
+    result << delim;
+    // crc
+    result << std::hex << std::setw(nibbleSize) << std::setfill('0') << _crc << delim;
+    // state
+    for (auto row : _state) {
+      result << std::hex << std::setw(nibbleSize) << std::setfill('0') << row;
+    }
+    result << delim;
     // checksum
-    result << std::hex << std::setw(hexWidth) << std::setfill('0') << ecmaCrc64(result.str());
+    result << std::hex << std::setw(nibbleSize) << std::setfill('0') << ecmaCrc64(result.str());
 
     return result.str();
   }
