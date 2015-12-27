@@ -1,5 +1,5 @@
-#ifndef RANDOM_H__
-#define RANDOM_H__
+#ifndef DRAUPNIR_RANDOM_H__
+#define DRAUPNIR_RANDOM_H__
 
 #include <limits>
 #include <vector>
@@ -114,5 +114,5 @@ namespace Draupnir {
 
 #include "Random.hpp"
 
-#endif /* RANDOM_H__ */
+#endif /* DRAUPNIR_RANDOM_H__ */
 

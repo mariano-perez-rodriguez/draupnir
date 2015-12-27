@@ -1,5 +1,5 @@
-#ifndef RANDOM_HPP__
-#define RANDOM_HPP__
+#ifndef DRAUPNIR_RANDOM_HPP__
+#define DRAUPNIR_RANDOM_HPP__
 
 #include <stack>
 
@@ -265,5 +265,5 @@ namespace Draupnir {
 
 }
 
-#endif /* RANDOM_HPP__ */
+#endif /* DRAUPNIR_RANDOM_HPP__ */
 
