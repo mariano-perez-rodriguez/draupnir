@@ -175,6 +175,16 @@ namespace Draupnir {
   }
 
   /**
+   * Virtual copy-constructor - pure virtual
+   *
+   * @return the constructed CrcSponge
+   */
+  template <typename T>
+  CrcSponge<T> *CrcSponge<T>::clone() noexcept {
+    return new CrcSponge(*this);
+  }
+
+  /**
    * CrcSponge main constructor
    *
    * @param generator  Generator polynomial to use - given in non-reversed form with its most significant bit omitted

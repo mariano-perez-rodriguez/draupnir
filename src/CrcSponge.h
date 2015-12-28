@@ -62,6 +62,13 @@ namespace Draupnir {
       static CrcSponge load(std::string const &dump, char delim = ':');
 
       /**
+       * Virtual copy-constructor - pure virtual
+       *
+       * @return the constructed CrcSponge
+       */
+      virtual CrcSponge *clone() noexcept override;
+
+      /**
        * Main constructor
        *
        * @param generator  Generator polynomial to use - given in non-reversed form with its most significant bit omitted

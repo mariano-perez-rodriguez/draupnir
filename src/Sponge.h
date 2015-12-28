@@ -25,6 +25,14 @@ namespace Draupnir {
    */
   class Sponge {
     public:
+
+      /**
+       * Virtual copy-constructor - pure virtual
+       *
+       * @return the constructed Sponge
+       */
+      virtual Sponge *clone() noexcept = 0;
+
       /**
        * Virtual destructor - defaulted
        *
