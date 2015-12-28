@@ -460,6 +460,8 @@ There are a number of ways you can contribute to Draupnir's development:
 
 For a detailed discussion of this last point, see the entry on "strength" on [Ritter's Crypto Glossary _and_  Dictionary of Technical Cryptography](http://www.ciphersbyritter.com/GLOSSARY.HTM#Strength).
 
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
+
 ## License
 
 Draupnir is free software, distributed under the [GNU Affero General Public License, version 3](https://www.gnu.org/licenses/agpl-3.0.html),
