@@ -141,9 +141,9 @@ namespace {
    * @throws whatever the insertion operator for data's type throws
    */
   template <typename T>
-  std::string to_string(T const &data) {
+  std::string to_hex_string(T const &data) {
     std::stringstream ss;
-    ss << data;
+    ss << std::setw(sizeof(T) * 2) << std::setfill('0') << std::hex << data;
     return ss.str();
   }
 
@@ -394,7 +394,7 @@ namespace Draupnir {
     for (std::size_t i = 0; i < 10; i++) {
       chk += parts[i] + delim;
     }
-    if (parts[10] != to_string(ecmaCrc64(chk))) {
+    if (parts[10] != to_hex_string(ecmaCrc64(chk))) {
       throw std::invalid_argument("Checksum failed");
     }
 
@@ -410,7 +410,7 @@ namespace Draupnir {
 
     // verify width
     if (bitSize != parseHex<std::size_t>(parts[3])) {
-      throw std::domain_error("Unsupported width: '" + to_string(parseHex<std::size_t>(parts[3])) + "'");
+      throw std::domain_error("Unsupported width: '" + to_hex_string(parseHex<std::size_t>(parts[3])) + "'");
     }
 
     // verify generator
