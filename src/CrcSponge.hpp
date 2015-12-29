@@ -426,7 +426,7 @@ namespace Draupnir {
     // extract initial state
     std::array<T, bitSize> initialState;
     for (std::size_t i = 0, k = 0; i < parts[7].length(); i += wordSize * 2, k++) {
-      initialState[k] = parseHex<T>(parts[8].substr(i, wordSize * 2));
+      initialState[k] = parseHex<T>(parts[7].substr(i, wordSize * 2));
     }
 
     // extract current crc value
@@ -435,7 +435,7 @@ namespace Draupnir {
     // extract current state
     std::array<T, bitSize> state;
     for (std::size_t i = 0, k = 0; i < parts[9].length(); i += wordSize * 2, k++) {
-      state[k] = parseHex<T>(parts[8].substr(i, wordSize * 2));
+      state[k] = parseHex<T>(parts[9].substr(i, wordSize * 2));
     }
 
     // build new CrcSponge
