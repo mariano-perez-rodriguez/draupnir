@@ -31,7 +31,7 @@ namespace Draupnir {
        *
        * @return the constructed Sponge
        */
-      virtual Sponge *clone() noexcept = 0;
+      virtual Sponge *clone() const noexcept = 0;
 
       /**
        * Virtual destructor - defaulted

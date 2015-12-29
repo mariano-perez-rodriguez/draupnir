@@ -180,7 +180,7 @@ namespace Draupnir {
    * @return the constructed CrcSponge
    */
   template <typename T>
-  CrcSponge<T> *CrcSponge<T>::clone() noexcept {
+  CrcSponge<T> *CrcSponge<T>::clone() const noexcept {
     return new CrcSponge(*this);
   }
 

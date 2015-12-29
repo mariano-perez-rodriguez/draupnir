@@ -66,7 +66,7 @@ namespace Draupnir {
        *
        * @return the constructed CrcSponge
        */
-      virtual CrcSponge *clone() noexcept override;
+      virtual CrcSponge *clone() const noexcept override;
 
       /**
        * Main constructor
