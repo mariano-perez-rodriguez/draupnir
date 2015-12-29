@@ -367,13 +367,7 @@ namespace Draupnir {
    */
   template <typename T>
   std::string CrcSponge<T>::dump(char delim) const noexcept {
-    std::stringstream result;
-
-    // version
-    result << std::hex << std::setw(4) << std::setfill('0') << 0x0001 << delim;
-    result << dumpV1(delim);
-
-    return result.str();
+    return dumpV1(delim);
   }
 
   /**
@@ -467,6 +461,8 @@ namespace Draupnir {
   std::string CrcSponge<T>::dumpV1(char delim) const noexcept {
     std::stringstream result;
 
+    // version
+    result << std::hex << std::setw(4) << std::setfill('0') << 0x0001 << delim;
     // soaking rounds
     result << std::hex << std::setw(4) << std::setfill('0') << _soakingRounds << delim;
     // squeezing rounds
