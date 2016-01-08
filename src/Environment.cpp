@@ -83,6 +83,7 @@ Environment &Environment::sink(std::size_t n, std::size_t m) noexcept {
  */
 Environment &Environment::raw(std::size_t count, bool hex) noexcept {
   std::ios::fmtflags flags(sout.flags());
+  sout << std::setw(0);
   if (hex) { sout << std::hex; }
   while (count--) {
     sout << stack.back()->squeeze();
@@ -100,7 +101,7 @@ Environment &Environment::raw(std::size_t count, bool hex) noexcept {
  */
 Environment &Environment::natural(std::size_t high) noexcept {
   std::ios::fmtflags flags(sout.flags());
-  sout << std::dec << Random::natural<std::uint64_t>(*stack.back(), high) << std::endl;
+  sout << std::setw(0) << std::dec << Random::natural<std::uint64_t>(*stack.back(), high) << std::endl;
   sout.flags(flags);
 
   return *this;
@@ -120,6 +121,24 @@ Environment &Environment::real(long double high) noexcept {
        << std::dec
        << (Random::real(*stack.back()) * high)
        << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
+
+/**
+ * Generate a permutation of the numbers between 0 and the given number
+ *
+ * @param highElem  Highest element to permute
+ * @return the resulting Environment
+ */
+Environment &Environment::permutation(std::size_t highElem) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::setw(0) << std::dec;
+  for (std::size_t x : Random::permutation(*stack.back(), highElem)) {
+    sout << x << " ";
+  }
+  sout << std::endl;
   sout.flags(flags);
 
   return *this;
