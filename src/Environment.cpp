@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iomanip>
 
+#include "Random.h"
+
 
 namespace Draupnir {
 
@@ -80,17 +82,29 @@ Environment &Environment::sink(std::size_t n, std::size_t m) noexcept {
  */
 Environment &Environment::raw(std::size_t count, bool hex) noexcept {
   std::ios::fmtflags flags(sout.flags());
-
   if (hex) { sout << std::hex; }
-
   while (count--) {
     sout << stack.back()->squeeze();
   }
-
   sout.flags(flags);
 
   return *this;
 }
+
+/**
+ * Generate a natural number from 0 to the number given
+ *
+ * @param high  Maximum number to generate
+ * @return the resulting Environment
+ */
+Environment &Environment::natural(std::size_t high) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::dec << Random::natural<std::uint64_t>(*stack.back(), high) << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
+
 
 }
 
