@@ -1,0 +1,3 @@
+[submodule "vendor/value_ptr"]
+	path = vendor/value_ptr
+	url = git@github.com:mariano-perez-rodriguez/value_ptr.git
