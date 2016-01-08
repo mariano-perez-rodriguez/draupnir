@@ -1,6 +1,8 @@
 # Clear implicit rules and variables
 include extras/ClearImplicit.mk
 
+# Main executable
+MAIN_EXEC = draupnir
 # Source directory
 SRCDIR = src
 
@@ -341,9 +343,9 @@ POSTCOMPILE = mv -f ${DEPDIR}/$*.dep.tmp ${DEPDIR}/$*.dep
 ################################################################################
 
 # target to build the main executable
-${BINDIR}/draupnir: ${OBJECTS} | ${BINDIR}
-	@${CC_LINK_INV} -o "${BINDIR}/draupnir"  $^
-	@${STRIP_INV} "${BINDIR}/draupnir"
+${BINDIR}/${MAIN_EXEC}: ${OBJECTS} | ${BINDIR}
+	@${CC_LINK_INV} -o "${BINDIR}/${MAIN_EXEC}"  $^
+	@${STRIP_INV} "${BINDIR}/${MAIN_EXEC}"
 
 # target to build all the objects and their dependencies
 ${OBJDIR}/%.o: ${SRCDIR}/%.cpp | ${OBJDIR} ${DEPDIR}
