@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <vector>
 #include <stdexcept>
+#include <new>
 
 #include "CrcSponge.h"
 
@@ -175,13 +176,14 @@ namespace Draupnir {
   }
 
   /**
-   * Virtual copy-constructor - pure virtual
+   * Virtual copy-constructor
    *
+   * @param where  Optional placement pointer
    * @return the constructed CrcSponge
    */
   template <typename T>
-  CrcSponge<T> *CrcSponge<T>::clone() const noexcept {
-    return new CrcSponge(*this);
+  CrcSponge<T> *CrcSponge<T>::clone(void *where) const noexcept {
+    return nullptr == where ? new CrcSponge(*this) : new(where) CrcSponge(*this);
   }
 
   /**

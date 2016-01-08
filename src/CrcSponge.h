@@ -62,11 +62,12 @@ namespace Draupnir {
       static CrcSponge load(std::string const &dump, char delim = ':');
 
       /**
-       * Virtual copy-constructor - pure virtual
+       * Virtual copy-constructor
        *
+       * @param where  Optional placement pointer
        * @return the constructed CrcSponge
        */
-      virtual CrcSponge *clone() const noexcept override;
+      virtual CrcSponge *clone(void *where = nullptr) const noexcept override;
 
       /**
        * Main constructor

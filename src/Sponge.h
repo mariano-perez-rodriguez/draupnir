@@ -29,9 +29,10 @@ namespace Draupnir {
       /**
        * Virtual copy-constructor - pure virtual
        *
+       * @param where  Optional placement pointer
        * @return the constructed Sponge
        */
-      virtual Sponge *clone() const noexcept = 0;
+      virtual Sponge *clone(void *where = nullptr) const noexcept = 0;
 
       /**
        * Virtual destructor - defaulted
