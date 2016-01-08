@@ -180,6 +180,43 @@ Environment &Environment::derangement(std::size_t highElem) noexcept {
   return *this;
 }
 
+/**
+ * Generate a sample of the given size, for the elements between 0 and the number given, using the given parts, either with or without replacements
+ *
+ * @param count  Number of samples to generate
+ * @param highElem  Highest element to sample
+ * @param parts  Part proportions to use
+ * @param replacements  Whether to allow replacements or not
+ * @return the resulting Environment
+ */
+Environment &Environment::sample(std::size_t count, std::size_t highElem, std::vector<std::size_t> parts, bool replacements) noexcept {
+  std::vector<std::size_t> s;
+
+  if (replacements) {
+    if (parts.empty()) {
+      s = Random::uniformSampleWithReplacement(*stack.back(), highElem, count);
+    } else {
+      s = Random::nonUniformSampleWithReplacement(*stack.back(), parts, count);
+    }
+  } else {
+    if (parts.empty()) {
+      s = Random::uniformSampleWithoutReplacement(*stack.back(), highElem, count);
+    } else {
+      s = Random::nonUniformSampleWithoutReplacement(*stack.back(), parts, count);
+    }
+  }
+
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::setw(0) << std::dec;
+  for (std::size_t x : s) {
+    sout << x << " ";
+  }
+  sout << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
+
 
 }
 
