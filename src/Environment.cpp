@@ -8,9 +8,11 @@ namespace Draupnir {
 /**
  * Construct a new execution environment
  *
- * @param ss  Ostream to use for output
+ * @param out  Ostream to use for output
+ * @param err  Ostream to use for errors
  */
-Environment::Environment(std::ostream &stream) noexcept : stack {}, out {stream} {}
+Environment::Environment(std::ostream &out, std::ostream &err) noexcept : stack{}, sout{out}, serr{err} {}
+
 
 /**
  * Remove the given number of elements from the top of the stack
@@ -21,7 +23,7 @@ Environment::Environment(std::ostream &stream) noexcept : stack {}, out {stream}
 Environment &Environment::drop(std::size_t n) noexcept {
   std::size_t nn = std::max(0ul, std::min(stack.size(), n));
   if (0 != nn) {
-    stack.erase(stack.end() - nn, stack.end());
+    stack.erase(stack.end() - static_cast<stack_offset_type>(nn), stack.end());
   }
   return *this;
 }
@@ -38,13 +40,34 @@ Environment &Environment::copy(std::size_t n, std::size_t m) noexcept {
   if (0 != mm) {
     for (std::size_t i = 0; i < n; i++) {
       for (std::size_t j = 0; j < mm; j++) {
-        stack.push_back(std::unique_ptr<Sponge>(stack[stack.size() - mm + j]->clone()));
+        stack.push_back(value_ptr<Sponge>(stack[stack.size() - mm + j]->clone()));
       }
     }
   }
   return *this;
 }
 
+/**
+ * Move the given number of elements downwards from the top of the stack the given number of positions
+ *
+ * @param n  Number of elements to move
+ * @param m  Number of positions to move them
+ * @return the resulting Environment
+ */
+Environment &Environment::sink(std::size_t n, std::size_t m) noexcept {
+  n = std::min(n, stack.size());
+  m = std::min(m, stack.size() - n);
+
+  if (0 != n && 0 != m) {
+    std::rotate(
+        stack.end() - static_cast<stack_offset_type>(n + m),
+        stack.end() - static_cast<stack_offset_type>(n    ),
+        stack.end()
+    );
+  }
+
+  return *this;
+}
 
 
 

@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <iterator>
 
 #include "Sponge.h"
 #include "vendor/value_ptr/value_ptr.h"
@@ -22,9 +23,10 @@ namespace Draupnir {
       /**
        * Construct a new execution environment
        *
-       * @param ss  Ostream to use for output
+       * @param out  Ostream to use for output
+       * @param err  Ostream to use for errors
        */
-      Environment(std::ostream &stream = std::cout) noexcept;
+      Environment(std::ostream &out = std::cout, std::ostream &err = std::cerr) noexcept;
 
       /**
        * Copy constructor - defaulted
@@ -62,6 +64,7 @@ namespace Draupnir {
        */
       ~Environment() noexcept = default;
 
+
       /**
        * Remove the given number of elements from the top of the stack
        *
@@ -87,6 +90,7 @@ namespace Draupnir {
        * @return the resulting Environment
        */
       Environment &sink(std::size_t n = 1, std::size_t m = 1) noexcept;
+
 
       /**
        * Generate the given number of raw bytes from the topmost Sponge
@@ -148,6 +152,7 @@ namespace Draupnir {
        */
       Environment &sample(std::size_t count = 1, std::size_t highElem = 9, std::vector<std::size_t> parts = {}, bool replacements = true) noexcept;
 
+
       // Environment &create(std::size_t width = 64, unsigned long long generator = 0ull, unsigned long long start = ~0ull, unsigned long long mask = ~0ull, )
 
       /**
@@ -199,6 +204,7 @@ namespace Draupnir {
        */
       Environment &step(std::size_t n = 1, std::size_t m = 1) noexcept;
 
+
       /**
        * Write the given data to the output stream
        *
@@ -228,10 +234,22 @@ namespace Draupnir {
       std::vector<value_ptr<Sponge>> stack;
 
       /**
+       * Using declaration for stack iterator offsets
+       *
+       */
+      using stack_offset_type = typename std::iterator_traits<std::vector<value_ptr<Sponge>>::iterator>::difference_type;
+
+      /**
        * Output stream
        *
        */
-      std::ostream &out;
+      std::ostream &sout;
+
+      /**
+       * Errors stream
+       *
+       */
+      std::ostream &serr;
   };
 
 }
