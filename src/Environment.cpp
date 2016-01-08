@@ -218,5 +218,34 @@ Environment &Environment::sample(std::size_t count, std::size_t highElem, std::v
 }
 
 
+
+/**
+ * Write the given data to the output stream
+ *
+ * @param what  What to write to the output stream
+ * @return the resulting Environment
+ */
+Environment &Environment::echo(std::string &what) noexcept {
+  sout << what;
+
+  return *this;
+}
+
+/**
+ * Flushes the stack and dumps its representation to serr
+ *
+ * @param silent  If set, don't dump to serr
+ * @return the resulting Environment
+ */
+Environment &Environment::exit(bool silent) noexcept {
+  if (!silent) {
+    for (auto s : stack) {
+      serr << s->dump() << std::endl;
+    }
+  }
+
+  return *this;
+}
+
 }
 

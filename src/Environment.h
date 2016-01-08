@@ -214,15 +214,10 @@ namespace Draupnir {
       Environment &echo(std::string &what) noexcept;
 
       /**
-       * Do nothing
+       * Flushes the stack and dumps its representation to serr
        *
+       * @param silent  If set, don't dump to serr
        * @return the resulting Environment
-       */
-      Environment &nop() const noexcept;
-
-      /**
-       *
-       *
        */
       Environment &exit(bool silent = false) noexcept;
 
