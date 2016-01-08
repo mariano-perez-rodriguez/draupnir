@@ -1,6 +1,7 @@
 #include "Environment.h"
 
 #include <algorithm>
+#include <iomanip>
 
 
 namespace Draupnir {
@@ -70,6 +71,26 @@ Environment &Environment::sink(std::size_t n, std::size_t m) noexcept {
 }
 
 
+/**
+ * Generate the given number of raw bytes from the topmost Sponge
+ *
+ * @param count  Number of bytes to generate
+ * @param hex  If true, generate the bytes as hex strings
+ * @return the resulting Environment
+ */
+Environment &Environment::raw(std::size_t count, bool hex) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+
+  if (hex) { sout << std::hex; }
+
+  while (count--) {
+    sout << stack.back()->squeeze();
+  }
+
+  sout.flags(flags);
+
+  return *this;
+}
 
 }
 
