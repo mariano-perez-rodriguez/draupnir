@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iomanip>
+#include <limits>
 
 #include "Random.h"
 
@@ -105,6 +106,24 @@ Environment &Environment::natural(std::size_t high) noexcept {
   return *this;
 }
 
+/**
+ * Generate a real number from 0.0 o the number given
+ *
+ * @param high  Maximum number to generate
+ * @return the resulting Environment
+ */
+Environment &Environment::real(long double high) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::fixed
+       << std::setw(0)
+       << std::setprecision(std::numeric_limits<long double>::digits10 + 1)
+       << std::dec
+       << (Random::real(*stack.back()) * high)
+       << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
 
 }
 
