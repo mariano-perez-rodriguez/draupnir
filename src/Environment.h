@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "Sponge.h"
-#include "../vendor/value_ptr/src/value_ptr.h"
+#include "vendor/value_ptr/value_ptr.h"
 
 
 namespace Draupnir {
