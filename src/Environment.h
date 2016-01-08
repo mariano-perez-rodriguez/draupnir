@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "Sponge.h"
+#include "../vendor/value_ptr/src/value_ptr.h"
 
 
 namespace Draupnir {
@@ -224,7 +225,7 @@ namespace Draupnir {
        * Sponge stack
        *
        */
-      std::vector<std::unique_ptr<Sponge>> stack;
+      std::vector<value_ptr<Sponge>> stack;
 
       /**
        * Output stream
