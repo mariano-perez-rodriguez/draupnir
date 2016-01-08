@@ -144,5 +144,42 @@ Environment &Environment::permutation(std::size_t highElem) noexcept {
   return *this;
 }
 
+/**
+ * Generate a cycle of the numbers between 0 and the given number
+ *
+ * @param highElem  Highest element to permute
+ * @return the resulting Environment
+ */
+Environment &Environment::cycle(std::size_t highElem) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::setw(0) << std::dec;
+  for (std::size_t x : Random::cycle(*stack.back(), highElem)) {
+    sout << x << " ";
+  }
+  sout << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
+
+/**
+ * Generate a derangement of the numbers between 0 and the given number
+ *
+ * @param highElem  Highest element to permute
+ * @return the resulting Environment
+ */
+Environment &Environment::derangement(std::size_t highElem) noexcept {
+  std::ios::fmtflags flags(sout.flags());
+  sout << std::setw(0) << std::dec;
+  for (std::size_t x : Random::derangement(*stack.back(), highElem)) {
+    sout << x << " ";
+  }
+  sout << std::endl;
+  sout.flags(flags);
+
+  return *this;
+}
+
+
 }
 
