@@ -372,6 +372,7 @@ namespace Draupnir {
     return dumpV1(delim);
   }
 
+
   /**
    * Load a version 1 dumped state into a new CrcSponge
    *

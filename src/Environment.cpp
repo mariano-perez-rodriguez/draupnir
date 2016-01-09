@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <limits>
+#include <fstream>
 
 #include "Random.h"
 
@@ -217,6 +218,88 @@ Environment &Environment::sample(std::size_t count, std::size_t highElem, std::v
   return *this;
 }
 
+
+/**
+ * Unserialize the given state and push it to the top of the stack
+ *
+ * @param state  State to unserialize
+ * @return the resulting Environment
+ */
+Environment &Environment::load(std::string &state) {
+  // ???
+}
+
+/**
+ * Unserialize the given number of lines in the given file
+ *
+ * @param file  File to read state serializations from
+ * @param count  Number of lines to deserialize (all if 0)
+ * @return the resulting Environment
+ */
+Environment &Environment::open(std::string &file, std::size_t count) {
+  std::ifstream input(file);
+  std::string line;
+
+  while (std::getline(input, line)) {
+    load(line);
+  }
+
+  return *this;
+}
+
+/**
+ * Reset the given number of Sponges from the top of the stack to their starting states
+ *
+ * @param n  Number of Sponges to reset
+ * @return the resulting Environment
+ */
+Environment &Environment::reset(std::size_t n) noexcept {
+  n = std::min(n, stack.size());
+
+  std::for_each(stack.rbegin(), stack.rbegin() + static_cast<stack_offset_type>(n), [](auto &x){ x->reset(); });
+
+  return *this;
+}
+
+/**
+ * Soak the given data to the given number of Sponges from the top of the stack
+ *
+ * @param data  Data to soak
+ * @param n  Number of Sponges to soak
+ * @return the resulting Environment
+ */
+Environment &Environment::soak(std::string &data, std::size_t n) noexcept {
+  n = std::min(n, stack.size());
+
+  std::for_each(stack.rbegin(), stack.rbegin() + static_cast<stack_offset_type>(n), [&data](auto &x){ x->soak(data); });
+
+  return *this;
+}
+
+/**
+ *
+ *
+ */
+Environment &Environment::reseed(std::size_t m, std::size_t n, bool independent) noexcept {
+  // ???
+}
+
+/**
+ * Step the given number of Sponges from the top of the stack for the given number of steps
+ *
+ * @param n  The number of Sponges to step
+ * @param m  The number of steps to take
+ * @return the resulting Environment
+ */
+Environment &Environment::step(std::size_t n, std::size_t m) noexcept {
+  n = std::min(n, stack.size());
+
+  if (0 != m) {
+    std::for_each(stack.rbegin(), stack.rbegin() + static_cast<stack_offset_type>(n), [m](auto &x){ x->step(m); });
+  }
+
+  return *this;
+}
 
 
 /**
