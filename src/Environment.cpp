@@ -322,7 +322,7 @@ Environment &Environment::echo(std::string &what) noexcept {
  */
 Environment &Environment::exit(bool silent) noexcept {
   if (!silent) {
-    for (auto s : stack) {
+    for (auto &s : stack) {
       serr << s->dump() << std::endl;
     }
   }
