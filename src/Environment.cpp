@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <limits>
 #include <fstream>
+#include <sstream>
 
 #include "Random.h"
 
@@ -305,11 +306,15 @@ Environment &Environment::step(std::size_t n, std::size_t m) noexcept {
 /**
  * Write the given data to the output stream
  *
+ * If the string contains escaped escape sequences, they're expanded.
+ *
  * @param what  What to write to the output stream
  * @return the resulting Environment
  */
 Environment &Environment::echo(std::string &what) noexcept {
-  sout << what;
+  std::ostringstream ss;
+  ss << what;
+  sout << ss.str();
 
   return *this;
 }
