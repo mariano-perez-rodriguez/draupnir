@@ -283,6 +283,10 @@ Environment &Environment::soak(std::string &data, std::size_t n) noexcept {
  */
 Environment &Environment::reseed(std::size_t m, std::size_t n, bool independent) noexcept {
   // ???
+  m = std::min(m, stack.size());
+
+  auto &seeder = *(stack.rbegin() + static_cast<stack_offset_type>(m));
+
 }
 
 /**
